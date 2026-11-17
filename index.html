@@ -3,6 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<meta name="theme-color" content="#004f44">
 <title>Backlink-Tracker Wettbewerber</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -24,6 +27,9 @@
   --warn: #b42318;
   --warn-soft: #fdecea;
   --font: "IBM Plex Sans Arabic", "Segoe UI", Tahoma, system-ui, sans-serif;
+  --s1: 4px; --s2: 8px; --s3: 12px; --s4: 16px; --s5: 24px; --s6: 32px;
+  --r-sm: 10px; --r-md: 12px; --r-lg: 16px;
+  --shadow: 0 1px 2px rgba(16,40,35,.05), 0 4px 16px rgba(16,40,35,.06);
   color-scheme: light;
 }
 @media (prefers-color-scheme: dark) {
@@ -47,12 +53,14 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .wrap { max-width: 1060px; margin: 0 auto; padding: 0 16px; }
 
 /* header band */
-.band { background: #004f44; color: #fff; padding: 20px 0 64px; }
-#comps { margin-top: 8px; }
-.band .wrap.top { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; justify-content: space-between; }
-.title h1 { margin: 0; font-size: 24px; font-weight: 700; text-wrap: balance; }
-.title p { margin: 2px 0 0; opacity: .85; font-size: 14px; }
-.title p bdi { font-weight: 600; }
+.band { background: #004f44; color: #fff; padding: var(--s5) 0 72px; }
+.band .wrap.top { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: var(--s4) var(--s5); align-items: center; }
+.brand { display: flex; align-items: center; padding-inline-end: var(--s5); border-inline-end: 1px solid rgba(255,255,255,.22); align-self: stretch; }
+.brand img { display: block; width: 132px; height: auto; }
+.title { min-width: 0; }
+.title h1 { margin: 0; font-size: 22px; font-weight: 700; line-height: 1.3; text-wrap: balance; }
+.title p { margin: var(--s1) 0 0; opacity: .82; font-size: 14px; }
+.pickers { display: grid; gap: var(--s2); margin-top: var(--s5); padding-top: var(--s4); border-top: 1px solid rgba(255,255,255,.14); }
 .tools { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
 .lang { display: inline-flex; background: rgba(255,255,255,.12); border-radius: 999px; padding: 3px; }
 .lang button { border: 0; background: transparent; color: #fff; padding: 6px 14px; border-radius: 999px; cursor: pointer; font-weight: 600; font-size: 14px; }
@@ -63,9 +71,9 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .save[data-s="off"] .dot { background: #ffb4ab; }
 
 /* store bar */
-.stores { margin-top: 14px; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
-.stores .lbl { font-size: 14px; opacity: .85; }
-.sbtn { border: 1px solid rgba(255,255,255,.35); background: transparent; color: #fff; border-radius: 999px; padding: 6px 14px; cursor: pointer; font-weight: 600; font-size: 14px; display: inline-flex; gap: 7px; align-items: center; }
+.stores { display: flex; gap: var(--s2); align-items: center; flex-wrap: wrap; min-width: 0; }
+.stores .lbl { font-size: 13.5px; opacity: .8; flex: none; min-width: 64px; }
+.sbtn { flex: none; min-height: 36px; border: 1px solid rgba(255,255,255,.35); background: transparent; color: #fff; border-radius: 999px; padding: 6px 14px; cursor: pointer; font-weight: 600; font-size: 14px; display: inline-flex; gap: 7px; align-items: center; }
 .sbtn .sd { width: 10px; height: 10px; border-radius: 50%; background: var(--c); box-shadow: 0 0 0 2px #fff; }
 .sbtn[aria-pressed="true"] { background: #fff; color: #004f44; border-color: #fff; }
 .sbtn.add { border-style: dashed; font-weight: 500; }
@@ -81,12 +89,25 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .cur-store { color: var(--ink); font-weight: 700; }
 
 /* summary */
-.summary { margin-top: -44px; display: grid; grid-template-columns: 1.6fr 1fr 1fr; gap: 12px; }
-.card { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; }
-.prog .big { font-size: 30px; font-weight: 700; font-variant-numeric: tabular-nums; line-height: 1.1; }
+.summary { margin-top: -48px; display: grid; grid-template-columns: 1.2fr .9fr .9fr 1.5fr; gap: var(--s3); align-items: stretch; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-lg); padding: var(--s4) 20px; box-shadow: var(--shadow); min-width: 0; }
+.summary .card { display: flex; flex-direction: column; gap: var(--s1); }
+.card .cap { font-size: 13px; color: var(--muted); font-weight: 600; margin-bottom: var(--s1); }
+.drbars { display: grid; gap: 6px; margin-top: var(--s1); }
+.drb { display: grid; grid-template-columns: minmax(0, 1fr) 56px 30px; gap: var(--s2); align-items: center; font-size: 13px; }
+.drb bdi { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.drb .tr { height: 6px; border-radius: 99px; background: var(--brand-soft); overflow: hidden; }
+.drb .tr i { display: block; height: 100%; border-radius: 99px; background: var(--muted); opacity: .55; }
+.drb b { text-align: end; font-variant-numeric: tabular-nums; }
+.drb.me { color: var(--brand); font-weight: 700; }
+.drb.me .tr i { background: var(--hot); opacity: 1; min-width: 4px; }
+.prog .big { font-size: 32px; font-weight: 700; font-variant-numeric: tabular-nums; line-height: 1.1; }
 .prog .big small { font-size: 16px; color: var(--muted); font-weight: 500; }
 .prog .lbl { color: var(--muted); font-size: 14px; }
-.bar { height: 10px; background: var(--brand-soft); border-radius: 99px; overflow: hidden; margin-top: 12px; }
+.bar { height: 10px; background: var(--brand-soft); border-radius: 99px; overflow: hidden; margin-top: var(--s3); }
+.mini { display: flex; flex-wrap: wrap; gap: var(--s2); margin-top: auto; padding-top: var(--s3); }
+.mini span { font-size: 12.5px; color: var(--muted); background: var(--bg); border-radius: 999px; padding: 3px 10px; }
+.mini b { color: var(--ink); font-variant-numeric: tabular-nums; }
 .bar i { display: block; height: 100%; width: 0; background: var(--done); border-radius: 99px; transition: width .4s ease; }
 .stat .v { font-size: 26px; font-weight: 700; font-variant-numeric: tabular-nums; line-height: 1.15; }
 .stat .v.hot { color: var(--hot); }
@@ -98,21 +119,22 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .drrow b { font-variant-numeric: tabular-nums; white-space: nowrap; }
 .drrow bdi { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .drrow.me { color: var(--brand); font-weight: 600; }
-.cbtn { border: 1px solid rgba(255,255,255,.35); background: transparent; color: #fff; border-radius: 999px; padding: 5px 12px; cursor: pointer; font-weight: 500; font-size: 13.5px; }
+.cbtn { flex: none; min-height: 34px; border: 1px solid rgba(255,255,255,.3); background: transparent; color: #fff; border-radius: 999px; padding: 5px 12px; cursor: pointer; font-weight: 500; font-size: 13.5px; }
 .cbtn[aria-pressed="true"] { background: rgba(255,255,255,.2); border-color: #fff; font-weight: 700; }
 .cbtn .n { opacity: .8; font-variant-numeric: tabular-nums; }
 .cp { background: var(--bg); color: var(--muted); border: 1px dashed var(--line); font-weight: 500; }
 
 /* steps */
-.steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 14px 0 0; padding: 0; list-style: none; counter-reset: s; }
-.steps li { counter-increment: s; display: flex; gap: 10px; align-items: flex-start; font-size: 14px; color: var(--muted); }
+.steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s3); margin: var(--s4) 0 0; padding: var(--s3) var(--s4); list-style: none; counter-reset: s; border-radius: var(--r-md); background: var(--surface); border: 1px dashed var(--line); }
+.steps li { counter-increment: s; display: flex; gap: var(--s2); align-items: center; font-size: 13.5px; color: var(--muted); line-height: 1.45; }
 .steps li::before { content: counter(s); flex: none; width: 24px; height: 24px; border-radius: 50%; background: var(--brand-soft); color: var(--brand); font-weight: 700; display: grid; place-items: center; font-size: 13px; }
 
-.notice { display: none; margin-top: 12px; background: var(--hot-soft); color: var(--ink); border: 1px solid var(--line); border-radius: 10px; padding: 10px 14px; font-size: 14px; }
+.notice { display: none; margin-top: var(--s3); background: var(--hot-soft); color: var(--ink); border: 1px solid var(--line); border-radius: 10px; padding: 10px 14px; font-size: 14px; }
 .notice.show { display: block; }
 
 /* controls */
-.controls { position: sticky; top: 0; z-index: 5; background: var(--bg); padding: 12px 0 10px; margin-top: 14px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 10px; }
+.toolbar { position: sticky; top: 0; z-index: 5; background: var(--bg); margin-top: var(--s5); box-shadow: 0 8px 12px -12px rgba(16,40,35,.35); }
+.controls { padding: var(--s3) 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--s3); }
 .searchrow { display: flex; gap: 10px; }
 .search { flex: 1; min-width: 0; border: 1px solid var(--line); background: var(--surface); border-radius: 10px; padding: 10px 14px; }
 .dl { flex: none; border: 1px solid var(--line); background: var(--surface); border-radius: 10px; padding: 10px 12px; font-weight: 600; cursor: pointer; white-space: nowrap; }
@@ -128,8 +150,9 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .chip.spamchip[aria-pressed="true"] { background: var(--warn); border-color: var(--warn); }
 
 /* list */
-.list { list-style: none; margin: 0 0 24px; padding: 0; display: grid; gap: 8px; }
-.row { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; display: grid; grid-template-columns: auto minmax(0, 1fr) auto auto; gap: 14px; align-items: center; transition: background .2s; }
+.list { list-style: none; margin: var(--s1) 0 var(--s6); padding: 0; display: grid; gap: var(--s2); }
+.row { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-md); padding: 14px var(--s4); display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: var(--s2) var(--s4); align-items: center; transition: background .2s, border-color .2s; }
+.row:hover { border-color: color-mix(in srgb, var(--brand) 35%, var(--line)); }
 .row.is-done { background: var(--done-soft); border-color: transparent; }
 .check { width: 44px; height: 44px; border-radius: 12px; border: 2px solid var(--line); background: var(--surface); display: grid; place-items: center; cursor: pointer; padding: 0; transition: background .15s, border-color .15s; }
 .check svg { width: 22px; height: 22px; stroke: transparent; }
@@ -143,7 +166,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .dom bdi { word-break: break-all; }
 .path { display: block; font-size: 12.5px; color: var(--muted); text-decoration: none; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; direction: ltr; text-align: start; }
 html[dir="rtl"] .path { text-align: right; }
-.meta { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; justify-content: flex-end; }
+.meta { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; justify-content: flex-start; margin-top: var(--s2); }
 .pill { font-size: 12.5px; border-radius: 999px; padding: 2px 9px; white-space: nowrap; font-weight: 600; font-variant-numeric: tabular-nums; }
 .dr { background: var(--brand-soft); color: var(--brand); }
 .dr.hi { background: var(--brand); color: #fff; }
@@ -168,14 +191,15 @@ html[dir="rtl"] .path { text-align: right; }
 .gloss b { color: var(--ink); display: block; }
 
 .toast { position: fixed; inset-inline: 16px; bottom: 16px; margin: 0 auto; max-width: 520px; z-index: 20; background: #142320; color: #fff; border-radius: 14px; padding: 12px 12px 12px 16px; display: flex; gap: 12px; align-items: center; box-shadow: 0 10px 30px rgba(0,0,0,.25); transform: translateY(140%); transition: transform .25s ease; }
-.toast.show { transform: none; }
+.toast { visibility: hidden; transition: transform .25s ease, visibility 0s linear .25s; }
+.toast.show { transform: none; visibility: visible; transition: transform .25s ease; }
 .toast .msg { flex: 1; min-width: 0; font-size: 14px; }
 .toast .msg bdi { font-weight: 600; }
 .toast button { border: 0; border-radius: 10px; padding: 9px 16px; font-weight: 700; cursor: pointer; background: #9fd8c9; color: #00332c; white-space: nowrap; }
 .toast .bar2 { position: absolute; inset-inline: 14px; bottom: 5px; height: 3px; border-radius: 3px; background: rgba(255,255,255,.25); overflow: hidden; }
 .toast .bar2 i { display: block; height: 100%; background: #9fd8c9; width: 100%; }
 /* tabs */
-.tabs { display: flex; gap: 6px; margin-top: 16px; border-bottom: 1px solid var(--line); overflow-x: auto; scrollbar-width: none; }
+.tabs { display: flex; gap: var(--s1); border-bottom: 1px solid var(--line); overflow-x: auto; scrollbar-width: none; }
 .tabs::-webkit-scrollbar { display: none; }
 .tab { flex: none; border: 0; background: transparent; padding: 10px 14px; font-weight: 600; font-size: 15px; color: var(--muted); cursor: pointer; border-bottom: 3px solid transparent; margin-bottom: -1px; display: inline-flex; gap: 7px; align-items: center; }
 .tab .n { font-size: 12.5px; background: var(--brand-soft); color: var(--brand); border-radius: 999px; padding: 0 8px; font-variant-numeric: tabular-nums; }
@@ -265,12 +289,30 @@ dialog.ai::backdrop { background: rgba(10,20,18,.55); }
 .pbtn { display: inline-block; margin-top: 8px; text-decoration: none; border: 0; border-radius: 10px; padding: 8px 14px; font-weight: 700; font-size: 14px; background: var(--brand); color: #fff; cursor: pointer; }
 .warnbox { background: var(--warn-soft); border-radius: 12px; padding: 12px 16px; font-size: 14px; margin-top: 14px; }
 
-@media (max-width: 760px) {
+@media (max-width: 980px) {
   .summary { grid-template-columns: 1fr 1fr; }
-  .prog { grid-column: 1 / -1; }
-  .steps { grid-template-columns: 1fr; gap: 6px; }
-  .row { grid-template-columns: auto minmax(0, 1fr) auto; gap: 10px 12px; }
-  .meta { grid-column: 1 / -1; grid-row: 2; justify-content: flex-start; }
+}
+@media (max-width: 760px) {
+  .band { padding: var(--s4) 0 64px; }
+  .band .wrap.top { grid-template-columns: auto auto; justify-content: space-between; }
+  .brand { border: 0; padding: 0; }
+  .brand img { width: 112px; }
+  .title { grid-column: 1 / -1; grid-row: 2; }
+  .pickers { margin-top: var(--s4); padding-top: var(--s3); }
+  .stores { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; margin-inline: -16px; padding-inline: 16px; }
+  .stores::-webkit-scrollbar { display: none; }
+  html[dir="rtl"] .stores { -webkit-mask-image: linear-gradient(to left, transparent 0, #000 28px); mask-image: linear-gradient(to left, transparent 0, #000 28px); }
+  html[dir="ltr"] .stores { -webkit-mask-image: linear-gradient(to right, transparent 0, #000 28px); mask-image: linear-gradient(to right, transparent 0, #000 28px); }
+  .tools { flex-wrap: nowrap; gap: var(--s2); }
+  .save[data-s="ok"] #saveTxt { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  .save[data-s="ok"] { padding: 9px; }
+  .lang button { padding: 6px 12px; }
+  .stores .lbl { min-width: 0; }
+  .summary { grid-template-columns: 1fr 1fr; gap: var(--s2); }
+  .prog, .drcard { grid-column: 1 / -1; }
+  .card { padding: 14px var(--s4); }
+  .steps { grid-template-columns: 1fr; gap: var(--s2); }
+  .row { grid-template-columns: auto minmax(0, 1fr); gap: var(--s3); padding: var(--s3) 14px; }
   .open { padding: 8px 10px; }
   .gloss { grid-template-columns: 1fr; }
   .acts { grid-column: 1 / -1; justify-content: flex-start; }
@@ -279,7 +321,7 @@ dialog.ai::backdrop { background: rgba(10,20,18,.55); }
   .qitem { grid-template-columns: 1fr; }
   .qitem .btnrow { justify-content: flex-start; }
   .fld textarea { min-height: 220px; }
-  .title h1 { font-size: 21px; }
+  .title h1 { font-size: 19px; }
 }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
 </style>
@@ -287,9 +329,10 @@ dialog.ai::backdrop { background: rgba(10,20,18,.55); }
 <body>
 <header class="band">
   <div class="wrap top">
+    <a class="brand" href="https://www.karinex.de/" target="_blank" rel="noopener"><img src="assets/karinex-logo-white.png" alt="KARINEX" width="132" height="22"></a>
     <div class="title">
       <h1 data-t="h1"></h1>
-      <p><span data-t="sub"></span> <span id="compNames"></span></p>
+      <p id="subline"></p>
     </div>
     <div class="tools">
       <span class="save" id="save" data-s="busy" role="status" aria-live="polite"><span class="dot"></span><span id="saveTxt"></span></span>
@@ -299,7 +342,7 @@ dialog.ai::backdrop { background: rgba(10,20,18,.55); }
       </div>
     </div>
   </div>
-  <div class="wrap">
+  <div class="wrap pickers">
     <div class="stores" id="stores" role="group"></div>
     <div class="stores" id="comps" role="group"></div>
   </div>
@@ -311,14 +354,19 @@ dialog.ai::backdrop { background: rgba(10,20,18,.55); }
       <div class="big"><span id="pDone">0</span> <small id="pOf"></small></div>
       <div class="lbl" id="pLbl"></div>
       <div class="bar" aria-hidden="true"><i id="pBar"></i></div>
+      <div class="mini" id="pMini"></div>
     </div>
     <div class="card stat">
       <div class="v hot"><span id="sHot">0</span><small id="sHotOf" style="font-size:15px;color:var(--muted);font-weight:500"></small></div>
       <div class="l" id="sHotL"></div>
     </div>
     <div class="card stat">
-      <div class="l" data-t="sDr"></div>
-      <div id="drList"></div>
+      <div class="v"><span id="sBr">0</span><small id="sBrOf" style="font-size:15px;color:var(--muted);font-weight:500"></small></div>
+      <div class="l" id="sBrL"></div>
+    </div>
+    <div class="card drcard">
+      <div class="cap" data-t="sDr"></div>
+      <div class="drbars" id="drList"></div>
     </div>
   </section>
 
@@ -329,6 +377,7 @@ dialog.ai::backdrop { background: rgba(10,20,18,.55); }
   </ol>
   <div class="notice" id="notice" role="alert"></div>
 
+  <div class="toolbar">
   <div class="tabs" id="tabs" role="tablist"></div>
 
   <div class="controls" id="controls">
@@ -344,6 +393,7 @@ dialog.ai::backdrop { background: rgba(10,20,18,.55); }
       <button type="button" class="dl" id="dlCsv" data-t="dl"></button>
     </div>
     <div class="chips" id="chips" role="group"></div>
+  </div>
   </div>
 
   <section id="view" aria-live="polite"></section>
@@ -366,11 +416,11 @@ try { DATA = await (await fetch("data.json", { cache: "no-cache" })).json(); }
 catch (e) { document.getElementById("view").innerHTML = '<p class="empty">data.json konnte nicht geladen werden.</p>'; return; }
 const T = {
   ar: {
-    h1: "متتبّع الروابط الخلفية", sub: "مواقع تربط بالمنافسين:", compLbl: "المنافس:", allComps: "الكل", links: "يربط بـ",
+    h1: "متتبّع الروابط الخلفية", subN: "{n} موقعاً يربط بـ {c} منافسين · بيانات Ahrefs بتاريخ {d}", sBrL: "روابط مكسورة متبقية عند المنافسين", mOpen: "متبقٍ", mDf: "يمرّر قوة", mVer: "روابط مؤكدة", sub: "مواقع تربط بالمنافسين:", compLbl: "المنافس:", allComps: "الكل", links: "يربط بـ",
     saving: "جارٍ الحفظ…", saved: "محفوظ", loading: "جارٍ تحميل العلامات…", local: "محفوظ على هذا الجهاز فقط", ro: "عرض فقط",
     pOf: "من {n} موقع", pLbl: "سجّلنا فيها لمتجر {s}",
     sHot: "فرص قوية (DR 30+) تم التسجيل فيها لـ {s}", storeLbl: "المتجر:", undo: "تراجع", tOn: "تم التسجيل في {d} لمتجر {s}", tOff: "أُزيل التسجيل من {d} لمتجر {s}", tUndone: "تم التراجع", addStore: "+ متجر جديد", addPh: "مثال: shop.de", add: "إضافة", cancel: "إلغاء", badStore: "اكتبي اسم نطاق صحيح، مثل shop.de", dupStore: "هذا المتجر موجود.", sDr: "قوة الدومين (DR)", sYou: "karinex.de:",
-    st1: "افتحي صفحة الموقع بزر «فتح».", st2: "سجّلي في الموقع أو أضيفي رابط {s}.", st3: "اختاري المتجر في الأعلى، ثم اضغطي ✓ ويُحفظ تلقائياً.",
+    st1: "افتحي صفحة الموقع بزر «فتح».", st2: "سجّلي في الموقع أو أضيفي رابط {s}", st3: "اختاري المتجر في الأعلى، ثم اضغطي ✓ ويُحفظ تلقائياً.",
     search: "بحث", ph: "ابحثي عن موقع…", sortLbl: "الترتيب", sDR: "الأقوى أولاً", sTR: "الأكثر زيارات", sAZ: "أبجدياً",
     fAll: "كل الفرص", fDf: "يمرّر قوة فقط", dl: "⬇ تحميل", dlDone: "تم تحميل الملف ({n} صف).", f2: "فرص قوية", f1: "فرص", f3: "karinex عنده رابط", fDone: "تم ✓", fOpen: "المتبقي", fSpam: "سبام",
     o2: "فرصة قوية", o1: "فرصة", o3: "karinex عنده رابط",
@@ -422,11 +472,11 @@ const T = {
     newB: "جديد", verB: "🔗 مؤكد"
   },
   de: {
-    h1: "Backlink-Tracker", sub: "Seiten, die unsere Wettbewerber verlinken:", compLbl: "Wettbewerber:", allComps: "Alle", links: "verlinkt",
+    h1: "Backlink-Tracker", subN: "{n} Seiten verlinken {c} Wettbewerber · Ahrefs-Daten vom {d}", sBrL: "Offene defekte Links der Wettbewerber", mOpen: "Offen", mDf: "dofollow offen", mVer: "Bestätigte Links", sub: "Seiten, die unsere Wettbewerber verlinken:", compLbl: "Wettbewerber:", allComps: "Alle", links: "verlinkt",
     saving: "Speichert…", saved: "Gespeichert", loading: "Haken werden geladen…", local: "Nur auf diesem Gerät gespeichert", ro: "Nur Ansicht",
     pOf: "von {n} Seiten", pLbl: "eingetragen für den Shop {s}",
     sHot: "starke Chancen (DR 30+) erledigt für {s}", storeLbl: "Shop:", undo: "Rückgängig", tOn: "{d} für {s} als eingetragen markiert", tOff: "Eintrag bei {d} für {s} entfernt", tUndone: "Rückgängig gemacht", addStore: "+ Neuer Shop", addPh: "z. B. shop.de", add: "Hinzufügen", cancel: "Abbrechen", badStore: "Bitte eine gültige Domain eingeben, z. B. shop.de", dupStore: "Diesen Shop gibt es schon.", sDr: "Domain Rating (DR)", sYou: "karinex.de:",
-    st1: "Seite über „Öffnen“ aufrufen.", st2: "Dort registrieren oder Link zu {s} setzen.", st3: "Oben den Shop wählen, dann ✓ anklicken. Wird automatisch gespeichert.",
+    st1: "Seite über „Öffnen“ aufrufen.", st2: "Dort registrieren oder Link zu {s} setzen", st3: "Oben den Shop wählen, dann ✓ anklicken. Wird automatisch gespeichert.",
     search: "Suche", ph: "Domain suchen…", sortLbl: "Sortierung", sDR: "Stärkste zuerst", sTR: "Meiste Besucher", sAZ: "A–Z",
     fAll: "Alle Chancen", fDf: "Nur dofollow", dl: "⬇ Download", dlDone: "Datei heruntergeladen ({n} Zeilen).", f2: "Starke Chancen", f1: "Chancen", f3: "Verlinkt karinex schon", fDone: "Erledigt ✓", fOpen: "Offen", fSpam: "Spam",
     o2: "Starke Chance", o1: "Chance", o3: "Verlinkt karinex schon",
@@ -555,9 +605,10 @@ function renderComps() {
   $("#comps").innerHTML = `<span class="lbl">${t("compLbl")}</span>` +
     `<button type="button" class="cbtn" data-comp="-1" aria-pressed="${comp === -1}">${t("allComps")} <span class="n">${NF.format(nAll)}</span></button>` +
     COMPS.map((c, i) => `<button type="button" class="cbtn" data-comp="${i}" aria-pressed="${comp === i}"><bdi dir="ltr">${esc(c.n)}</bdi> <span class="n">${NF.format(per[i])}</span></button>`).join("");
-  $("#compNames").innerHTML = COMPS.map(c => `<bdi dir="ltr">${esc(c.n)}</bdi>`).join(" · ");
-  $("#drList").innerHTML = COMPS.map(c => `<div class="drrow"><bdi dir="ltr">${esc(c.n)}</bdi><b>DR ${NF.format(c.dr)}</b></div>`).join("") +
-    `<div class="drrow me"><bdi dir="ltr">karinex.de</bdi><b>DR 1,5</b></div>`;
+  $("#subline").textContent = t("subN", { n: NF.format(G.length), c: NF.format(COMPS.length), d: fmtDate(DATA.date || "2026-11-17") });
+  const drs = COMPS.map(c => ({ n: c.n, dr: c.dr })).sort((a, b) => b.dr - a.dr).concat([{ n: "karinex.de", dr: 1.5, me: true }]);
+  const maxDr = Math.max(...drs.map(x => x.dr), 1);
+  $("#drList").innerHTML = drs.map(x => `<div class="drb${x.me ? " me" : ""}"><bdi dir="ltr">${esc(x.n)}</bdi><span class="tr" aria-hidden="true"><i style="width:${(x.dr / maxDr * 100).toFixed(1)}%"></i></span><b>${NF.format(x.dr)}</b></div>`).join("");
 }
 
 function counts() {
@@ -583,12 +634,19 @@ function renderSummary() {
   $("#pDone").textContent = NF.format(n);
   $("#pOf").textContent = t("pOf", { n: NF.format(target) });
   $("#pLbl").innerHTML = esc(t("pLbl", { s: "\u0001" })).replace("\u0001", `<bdi dir="ltr" class="cur-store">${esc(cur)}</bdi>`);
-  $("#st2").innerHTML = esc(t("st2", { s: "\u0001" })).replace("\u0001", `<bdi dir="ltr" class="cur-store">${esc(cur)}</bdi>`);
+  $("#st2").innerHTML = "<span>" + esc(t("st2", { s: "\u0001" })).replace("\u0001", `<bdi dir="ltr" class="cur-store">${esc(cur)}</bdi>`) + "</span>";
   $("#pBar").style.width = (target ? n / target * 100 : 0) + "%";
   $("#pBar").style.background = color(cur);
   $("#sHot").textContent = NF.format(h);
   $("#sHotOf").textContent = " / " + NF.format(hotN);
   $("#sHotL").innerHTML = esc(t("sHot", { s: "\u0001" })).replace("\u0001", `<bdi dir="ltr">${esc(cur)}</bdi>`);
+  const brAll = BR.filter(b => comp < 0 || b.c === comp), brOpen = brAll.filter(b => !isDone(b.key)).length;
+  const verN = Object.values(AUTO.verified).filter(v => v[cur]).length;
+  const dfOpen = G.filter(x => inComp(x) && !haveFor(x) && x.df && !isDone(x.d)).length;
+  $("#pMini").innerHTML = `<span>${esc(t("mOpen"))} <b>${NF.format(target - n)}</b></span><span>${esc(t("mDf"))} <b>${NF.format(dfOpen)}</b></span><span>🔗 ${esc(t("mVer"))} <b>${NF.format(verN)}</b></span>`;
+  $("#sBr").textContent = NF.format(brOpen);
+  $("#sBrOf").textContent = " / " + NF.format(brAll.length);
+  $("#sBrL").textContent = t("sBrL");
 }
 
 function renderSave() {
@@ -620,7 +678,6 @@ function rowHTML(x, rank) {
       <div class="dom"><span class="rk">#${rank}</span><bdi dir="ltr">${esc(x.d)}</bdi></div>
       <a class="path" href="${esc(url)}" target="_blank" rel="noopener">${esc(shortPath(url))}</a>
       ${badges ? `<div class="marks">${badges}</div>` : ""}
-    </div>
     <div class="meta">
       <span class="pill dr${x.dr >= 60 ? " hi" : ""}">DR ${NF.format(Math.round(x.dr))}</span>
       <span class="pill traf">${x.tr ? NF.format(x.tr) : "–"} ${t("visits")}</span>
@@ -628,6 +685,7 @@ function rowHTML(x, rank) {
       ${x.o === 3 ? `<span class="pill o3">${t("o3")}</span>` : `<span class="pill o${x.o}">${t("o" + x.o)}</span>`}
       ${isVerified(x.d) ? `<span class="pill ver">${t("verB")}</span>` : ""}${x.n ? `<span class="pill new">${t("newB")}</span>` : ""}
       ${cps}
+    </div>
     </div>
     <div class="acts">${have ? "" : aiBtn(x.d)}<a class="open" href="${esc(url)}" target="_blank" rel="noopener">${t("open")}</a></div>
   </li>`;
@@ -671,12 +729,12 @@ function brokenHTML(b, rank) {
       <a class="path" href="${esc(b.from)}" target="_blank" rel="noopener">${esc(shortPath(b.from))}</a>
       <span class="dead" title="${esc(b.to)}">${esc(t("deadTo"))} ${esc(shortPath(b.to))}</span>
       ${badges ? `<div class="marks">${badges}</div>` : ""}
-    </div>
     <div class="meta">
       <span class="pill dr${b.dr >= 60 ? " hi" : ""}">DR ${NF.format(Math.round(b.dr))}</span>
       <span class="pill ${b.df ? "df" : "nf"}">${t(b.df ? "df" : "nf")}</span>
       <span class="pill kind-${b.k}">${t(b.k === "a" ? "bA" : "bF")}</span>
       <span class="pill cp">${t("links")} ${esc(shortName(COMPS[b.c].n))}</span>${isVerified(b.d) ? `<span class="pill ver">${t("verB")}</span>` : ""}${b.n ? `<span class="pill new">${t("newB")}</span>` : ""}
+    </div>
     </div>
     <div class="acts">
       ${aiBtn(b.key)}
