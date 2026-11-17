@@ -11,3 +11,9 @@ Statische Seite (`index.html`) + eine Vercel-Funktion (`api/marks.js`) zum Speic
 
 Ohne Datenbank funktioniert die Seite auch, speichert die Haken dann aber nur im jeweiligen Browser.
 Sprache: `/#ar` (Arabisch) oder `/#de` (Deutsch).
+
+## Inhalt (Stand 17.11.2026, Daten: Ahrefs)
+- **Chancen**: 482 Seiten, die die Wettbewerber verlinken: softwareindustrie24.de, mysoftware.de, softwarebilliger.de, lizenzhub.de.
+- **Defekte Links**: 27 Seiten, die auf tote Seiten (404) der Wettbewerber verlinken, mit fertiger E-Mail-Vorlage zum Kopieren.
+- **Plan Schritt für Schritt**: Reihenfolge, um die Domain-Stärke (DR) von karinex.de aufzubauen.
+- `disavow-karinex.txt`: 388 Spam-Domains, die karinex.de verlinken. In der Google Search Console im Disavow-Tool hochladen.
