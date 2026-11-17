@@ -43,7 +43,8 @@ Ohne Datenbank funktioniert die Seite auch, speichert die Haken dann aber nur im
 Sprache: `/#ar` (Arabisch) oder `/#de` (Deutsch).
 
 ## Daten (Stand 17.11.2026, Ahrefs)
-- **Chancen**: 482 Seiten, die die Wettbewerber verlinken: softwareindustrie24.de, mysoftware.de, softwarebilliger.de, lizenzhub.de.
-- **Defekte Links**: 27 Seiten, die auf tote Seiten (404) der Wettbewerber verlinken.
+- **Chancen**: 500 Seiten, die die Wettbewerber verlinken: softwareindustrie24.de, mysoftware.de, softwarebilliger.de, lizenzhub.de, best-software.de.
+- **Download**: Knopf „⬇ Download“ speichert die aktuelle Liste (mit Filter, Suche und Wettbewerber) als CSV für Excel.
+- **Defekte Links**: 35 Seiten, die auf tote Seiten (404) der Wettbewerber verlinken.
 - **Plan Schritt für Schritt**: Reihenfolge, um die Domain-Stärke (DR) von karinex.de aufzubauen.
 - `disavow-karinex.txt`: 388 Spam-Domains, die karinex.de verlinken. In der Google Search Console im Disavow-Tool hochladen.

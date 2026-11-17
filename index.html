@@ -115,6 +115,9 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .controls { position: sticky; top: 0; z-index: 5; background: var(--bg); padding: 12px 0 10px; margin-top: 14px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 10px; }
 .searchrow { display: flex; gap: 10px; }
 .search { flex: 1; min-width: 0; border: 1px solid var(--line); background: var(--surface); border-radius: 10px; padding: 10px 14px; }
+.dl { flex: none; border: 1px solid var(--line); background: var(--surface); border-radius: 10px; padding: 10px 12px; font-weight: 600; cursor: pointer; white-space: nowrap; }
+.dl:hover { border-color: var(--brand); color: var(--brand); }
+.controls[data-tab="broken"] .dl { display: inline-block; }
 .sort { min-width: 0; max-width: 42%; border: 1px solid var(--line); background: var(--surface); border-radius: 10px; padding: 10px 12px; }
 .chips { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 2px; scrollbar-width: none; }
 .chips::-webkit-scrollbar { display: none; }
@@ -338,6 +341,7 @@ dialog.ai::backdrop { background: rgba(10,20,18,.55); }
         <option value="tr" data-t="sTR"></option>
         <option value="az" data-t="sAZ"></option>
       </select>
+      <button type="button" class="dl" id="dlCsv" data-t="dl"></button>
     </div>
     <div class="chips" id="chips" role="group"></div>
   </div>
@@ -368,7 +372,7 @@ const T = {
     sHot: "فرص قوية (DR 30+) تم التسجيل فيها لـ {s}", storeLbl: "المتجر:", undo: "تراجع", tOn: "تم التسجيل في {d} لمتجر {s}", tOff: "أُزيل التسجيل من {d} لمتجر {s}", tUndone: "تم التراجع", addStore: "+ متجر جديد", addPh: "مثال: shop.de", add: "إضافة", cancel: "إلغاء", badStore: "اكتبي اسم نطاق صحيح، مثل shop.de", dupStore: "هذا المتجر موجود.", sDr: "قوة الدومين (DR)", sYou: "karinex.de:",
     st1: "افتحي صفحة الموقع بزر «فتح».", st2: "سجّلي في الموقع أو أضيفي رابط {s}.", st3: "اختاري المتجر في الأعلى، ثم اضغطي ✓ ويُحفظ تلقائياً.",
     search: "بحث", ph: "ابحثي عن موقع…", sortLbl: "الترتيب", sDR: "الأقوى أولاً", sTR: "الأكثر زيارات", sAZ: "أبجدياً",
-    fAll: "كل الفرص", f2: "فرص قوية", f1: "فرص", f3: "karinex عنده رابط", fDone: "تم ✓", fOpen: "المتبقي", fSpam: "سبام",
+    fAll: "كل الفرص", fDf: "يمرّر قوة فقط", dl: "⬇ تحميل", dlDone: "تم تحميل الملف ({n} صف).", f2: "فرص قوية", f1: "فرص", f3: "karinex عنده رابط", fDone: "تم ✓", fOpen: "المتبقي", fSpam: "سبام",
     o2: "فرصة قوية", o1: "فرصة", o3: "karinex عنده رابط",
     df: "يمرّر قوة", nf: "لا يمرّر قوة", visits: "زيارة/شهر", open: "فتح ↗",
     mark: "علّمي {d} كتم التسجيل لمتجر {s}", doneOn: "✓ {s} · {date}",
@@ -424,7 +428,7 @@ const T = {
     sHot: "starke Chancen (DR 30+) erledigt für {s}", storeLbl: "Shop:", undo: "Rückgängig", tOn: "{d} für {s} als eingetragen markiert", tOff: "Eintrag bei {d} für {s} entfernt", tUndone: "Rückgängig gemacht", addStore: "+ Neuer Shop", addPh: "z. B. shop.de", add: "Hinzufügen", cancel: "Abbrechen", badStore: "Bitte eine gültige Domain eingeben, z. B. shop.de", dupStore: "Diesen Shop gibt es schon.", sDr: "Domain Rating (DR)", sYou: "karinex.de:",
     st1: "Seite über „Öffnen“ aufrufen.", st2: "Dort registrieren oder Link zu {s} setzen.", st3: "Oben den Shop wählen, dann ✓ anklicken. Wird automatisch gespeichert.",
     search: "Suche", ph: "Domain suchen…", sortLbl: "Sortierung", sDR: "Stärkste zuerst", sTR: "Meiste Besucher", sAZ: "A–Z",
-    fAll: "Alle Chancen", f2: "Starke Chancen", f1: "Chancen", f3: "Verlinkt karinex schon", fDone: "Erledigt ✓", fOpen: "Offen", fSpam: "Spam",
+    fAll: "Alle Chancen", fDf: "Nur dofollow", dl: "⬇ Download", dlDone: "Datei heruntergeladen ({n} Zeilen).", f2: "Starke Chancen", f1: "Chancen", f3: "Verlinkt karinex schon", fDone: "Erledigt ✓", fOpen: "Offen", fSpam: "Spam",
     o2: "Starke Chance", o1: "Chance", o3: "Verlinkt karinex schon",
     df: "dofollow", nf: "nofollow", visits: "Besuche/Monat", open: "Öffnen ↗",
     mark: "{d} als eingetragen für {s} markieren", doneOn: "✓ {s} · {date}",
@@ -557,14 +561,14 @@ function renderComps() {
 }
 
 function counts() {
-  const c = { all: 0, 2: 0, 1: 0, 3: 0, done: 0, open: 0 };
-  for (const x of G) { if (!inComp(x)) continue; c[x.o]++; if (!haveFor(x)) { c.all++; if (isDone(x.d)) c.done++; else c.open++; } }
+  const c = { all: 0, 2: 0, 1: 0, 3: 0, done: 0, open: 0, df: 0 };
+  for (const x of G) { if (!inComp(x)) continue; c[x.o]++; if (!haveFor(x)) { c.all++; if (x.df) c.df++; if (isDone(x.d)) c.done++; else c.open++; } }
   return c;
 }
 
 function renderChips() {
   const c = counts();
-  const defs = [["all", "fAll", c.all], ["2", "f2", c[2]], ["1", "f1", c[1]], ["done", "fDone", c.done], ["open", "fOpen", c.open], ["3", "f3", c[3]], ["spam", "fSpam", SP.filter(s => comp < 0 || s.c.includes(comp)).length]];
+  const defs = [["all", "fAll", c.all], ["2", "f2", c[2]], ["1", "f1", c[1]], ["done", "fDone", c.done], ["open", "fOpen", c.open], ["df", "fDf", c.df], ["3", "f3", c[3]], ["spam", "fSpam", SP.filter(s => comp < 0 || s.c.includes(comp)).length]];
   $("#chips").innerHTML = defs.map(([k, lbl, n]) =>
     `<button type="button" class="chip${k === "spam" ? " spamchip" : ""}" data-f="${k}" aria-pressed="${filter === k}">${t(lbl)} <span class="n">${NF.format(n)}</span></button>`).join("");
 }
@@ -682,9 +686,48 @@ function brokenHTML(b, rank) {
   </li>`;
 }
 
-function renderBroken(v, qq) {
-  const rows = BR.filter(b => (comp < 0 || b.c === comp) && (!qq || b.d.includes(qq)))
+function brokenRows(qq) {
+  return BR.filter(b => (comp < 0 || b.c === comp) && (!qq || b.d.includes(qq)))
     .sort((a, b) => (a.k === b.k ? 0 : a.k === "a" ? -1 : 1) || b.dr - a.dr);
+}
+function oppRows(qq) {
+  const rows = G.filter(x => {
+    if (!inComp(x)) return false;
+    if (qq && !x.d.includes(qq)) return false;
+    if (filter === "all") return !haveFor(x);
+    if (filter === "done") return !haveFor(x) && isDone(x.d);
+    if (filter === "open") return !haveFor(x) && !isDone(x.d);
+    if (filter === "df") return !haveFor(x) && !!x.df;
+    return String(x.o) === filter;
+  });
+  return rows.sort(sort === "tr" ? (a, b) => b.tr - a.tr : sort === "az" ? (a, b) => a.d.localeCompare(b.d) : (a, b) => b.dr - a.dr || b.tr - a.tr);
+}
+function downloadCsv() {
+  const qq = q.trim().toLowerCase();
+  const cell = v => { const s = String(v == null ? "" : v); return /[";\n\r]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s; };
+  const status = key => [isDone(key) ? "erledigt " + fmtDate(marksOf(key)[cur]) : "offen", isVerified(key.replace(/^bl--/, "")) ? "Link bestätigt" : ""].filter(Boolean).join(", ");
+  let head, rows;
+  if (tab === "broken") {
+    head = ["Domain", "DR", "Linktyp", "Art", "Wettbewerber", "Seite mit totem Link", "Toter Link (404)", `Status ${cur}`, "Nachricht"];
+    rows = brokenRows(qq).map(b => { const d = draftOf(b.key); return [b.d, Math.round(b.dr), b.df ? "dofollow" : "nofollow", b.k === "a" ? "Artikel/Blog" : "Forum", COMPS[b.c].n, b.from, b.to, status(b.key), d && d.sentAt ? "gesendet " + fmtDate(d.sentAt) : d && d.page_type ? "fertig" : ""]; });
+  } else if (filter === "spam") {
+    head = ["Domain", "DR", "Wettbewerber"];
+    rows = SP.filter(s => comp < 0 || s.c.includes(comp)).filter(s => !qq || s.d.includes(qq)).map(s => [s.d, Math.round(s.dr), s.c.map(i => COMPS[i].n).join(", ")]);
+  } else {
+    head = ["Domain", "DR", "Besuche/Monat", "Linktyp", "Chance", "Wettbewerber", "Seite", `Status ${cur}`, "Nachricht"];
+    rows = oppRows(qq).map(x => { const d = draftOf(x.d); return [x.d, Math.round(x.dr), x.tr || 0, x.df ? "dofollow" : "nofollow", x.o === 3 ? "karinex schon gelistet" : x.o === 2 ? "stark (DR 30+)" : "Chance", COMPS.filter((c, i) => x.l[i]).map(c => c.n).join(", "), urlOf(x), status(x.d), d && d.sentAt ? "gesendet " + fmtDate(d.sentAt) : d && d.page_type ? "fertig" : ""]; });
+  }
+  const csv = "\ufeff" + [head].concat(rows).map(r => r.map(cell).join(";")).join("\r\n");
+  const name = `backlinks-${tab === "broken" ? "defekt" : filter === "spam" ? "spam" : "chancen"}-${comp < 0 ? "alle" : COMPS[comp].n}-${new Date().toISOString().slice(0, 10)}.csv`;
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8" }));
+  a.download = name; document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+  toast(esc(t("dlDone", { n: NF.format(rows.length) })), null);
+}
+
+function renderBroken(v, qq) {
+  const rows = brokenRows(qq);
   v.innerHTML = `<div class="spamnote" style="background:var(--brand-soft)">${esc(t("bNote"))}</div>` +
     (rows.length ? `<ul class="list">${rows.map((b, i) => brokenHTML(b, i + 1)).join("")}</ul>` : `<p class="empty">${t("empty")}</p>`);
 }
@@ -727,15 +770,7 @@ function renderList() {
       (rows.length ? `<ul class="spamgrid">${rows.map(s => `<li><bdi dir="ltr">${esc(s.d)}</bdi><span>DR ${NF.format(Math.round(s.dr))}</span></li>`).join("")}</ul>` : `<p class="empty">${t("empty")}</p>`);
     return;
   }
-  let rows = G.filter(x => {
-    if (!inComp(x)) return false;
-    if (qq && !x.d.includes(qq)) return false;
-    if (filter === "all") return !haveFor(x);
-    if (filter === "done") return !haveFor(x) && isDone(x.d);
-    if (filter === "open") return !haveFor(x) && !isDone(x.d);
-    return String(x.o) === filter;
-  });
-  rows = rows.slice().sort(sort === "tr" ? (a, b) => b.tr - a.tr : sort === "az" ? (a, b) => a.d.localeCompare(b.d) : (a, b) => b.dr - a.dr || b.tr - a.tr);
+  const rows = oppRows(qq);
   v.innerHTML = rows.length ? `<ul class="list">${rows.map((x, i) => rowHTML(x, i + 1)).join("")}</ul>` : `<p class="empty">${t("empty")}</p>`;
 }
 
@@ -856,6 +891,7 @@ document.addEventListener("submit", e => { if (e.target.id === "addForm") { e.pr
 document.addEventListener("keydown", e => { if (e.key === "Escape" && addOpen) { addOpen = false; addErr = ""; renderStores(); } });
 $("#q").addEventListener("input", e => { q = e.target.value; renderList(); });
 $("#sort").addEventListener("change", e => { sort = e.target.value; renderList(); });
+$("#dlCsv").addEventListener("click", downloadCsv);
 window.addEventListener("hashchange", () => setLang(location.hash.slice(1)));
 
 if (!stores.includes(cur)) cur = stores[0];
