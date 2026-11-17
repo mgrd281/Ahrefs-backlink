@@ -153,22 +153,7 @@ module.exports = async (req, res) => {
       const drafts = await L.hgetallJSON(L.K.drafts);
       const profile = await L.getProfile(primary);
       const want = Math.max(0, Math.min(25, parseInt(process.env.DAILY_DRAFTS || "8", 10) || 0));
-      const hasDraft = key => {
-        const dr = drafts[`${primary}|${key}`];
-        if (!dr) return false;
-        if (dr.error) return start - Date.parse(dr.at) < 3 * DAY || (dr.fails || 0) >= 2;
-        return true;
-      };
-      const isDone = key => !!(marks[key] || {})[primary];
-      const comps = l => l.map((u, i) => (u ? L.COMPS[i] : "")).filter(Boolean);
-      const queue = [
-        ...broken.filter(b => b.k === "a" && !isDone("bl--" + b.d) && !hasDraft("bl--" + b.d))
-          .sort((a, b) => b.dr - a.dr)
-          .map(b => ({ key: "bl--" + b.d, d: b.d, kind: "broken", url: b.from, dead: b.to, dr: b.dr, df: b.df, comps: [L.COMPS[b.c]] })),
-        ...opps.filter(o => o.o === 2 && !isDone(o.d) && !hasDraft(o.d) && !L.looksSpam(o.d))
-          .sort((a, b) => (b.dr + (b.df ? 15 : 0) + Math.log10((b.tr || 0) + 1) * 3) - (a.dr + (a.df ? 15 : 0) + Math.log10((a.tr || 0) + 1) * 3))
-          .map(o => { const i = o.l.findIndex(Boolean); return { key: o.d, d: o.d, kind: "opp", url: o.l[i] || `https://${o.d}/`, dr: o.dr, df: o.df, comps: comps(o.l) }; }),
-      ].slice(0, want);
+      const queue = L.pickCandidates({ opps, broken, marks, drafts, store: primary, want, now: start });
       await pool(queue, 3, async item => {
         const field = `${primary}|${item.key}`;
         try {

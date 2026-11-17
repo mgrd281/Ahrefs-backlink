@@ -119,7 +119,11 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .drrow b { font-variant-numeric: tabular-nums; white-space: nowrap; }
 .drrow bdi { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .drrow.me { color: var(--brand); font-weight: 600; }
-.cbtn { flex: none; min-height: 34px; border: 1px solid rgba(255,255,255,.3); background: transparent; color: #fff; border-radius: 999px; padding: 5px 12px; cursor: pointer; font-weight: 500; font-size: 13.5px; }
+.cbtn { flex: none; min-height: 34px; border: 1px solid rgba(255,255,255,.3); background: transparent; color: #fff; border-radius: 999px; padding: 4px 10px; cursor: pointer; font-weight: 500; font-size: 13px; }
+#comps { gap: 6px; flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; padding-block: 2px; }
+#comps::-webkit-scrollbar { display: none; }
+html[dir="rtl"] #comps { -webkit-mask-image: linear-gradient(to left, transparent 0, #000 24px); mask-image: linear-gradient(to left, transparent 0, #000 24px); }
+html[dir="ltr"] #comps { -webkit-mask-image: linear-gradient(to right, transparent 0, #000 24px); mask-image: linear-gradient(to right, transparent 0, #000 24px); }
 .cbtn[aria-pressed="true"] { background: rgba(255,255,255,.2); border-color: #fff; font-weight: 700; }
 .cbtn .n { opacity: .8; font-variant-numeric: tabular-nums; }
 .cp { background: var(--bg); color: var(--muted); border: 1px dashed var(--line); font-weight: 500; }
@@ -216,6 +220,25 @@ html[dir="rtl"] .dead { text-align: right; }
 .copy { border: 1px solid var(--line); border-radius: 10px; padding: 8px 12px; font-size: 14px; font-weight: 600; background: var(--surface); cursor: pointer; white-space: nowrap; }
 .copy:hover { border-color: var(--brand); color: var(--brand); }
 
+/* site logos */
+.fav { position: relative; flex: none; width: 36px; height: 36px; border-radius: 10px; background: var(--fc, var(--brand)); color: #fff; display: inline-grid; place-items: center; font-weight: 700; font-size: 15px; overflow: hidden; line-height: 1; box-shadow: inset 0 0 0 1px rgba(0,0,0,.06); }
+.fav img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; background: #fff; padding: 6px; }
+.fav.sm { width: 18px; height: 18px; border-radius: 5px; font-size: 10px; box-shadow: none; }
+.fav.sm img { padding: 1px; }
+.fav.md { width: 28px; height: 28px; border-radius: 8px; font-size: 13px; }
+.fav.md img { padding: 4px; }
+.main { display: grid; grid-template-columns: auto minmax(0, 1fr); column-gap: var(--s3); align-items: start; }
+.main > .fav { grid-row: 1 / span 4; margin-top: 2px; }
+.main > :not(.fav) { grid-column: 2; }
+.cbtn, .drb bdi, .pl { display: inline-flex; align-items: center; gap: 6px; }
+.drb .nm { display: flex; align-items: center; gap: 6px; min-width: 0; }
+.drb .nm bdi { display: block; }
+.ty { background: var(--bg); color: var(--ink); border: 1px solid var(--line); font-weight: 500; }
+.ty.easy { background: var(--done-soft); color: var(--done); border-color: transparent; font-weight: 600; }
+.multi { background: #ede9fe; color: #5b21b6; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .multi { background: #2e2350; color: #c4b5fd; } }
+:root[data-theme="dark"] .multi { background: #2e2350; color: #c4b5fd; }
+
 /* claude + automation */
 .ai-btn { border: 1px solid var(--brand); color: var(--brand); background: var(--brand-soft); border-radius: 10px; padding: 8px 12px; font-size: 14px; font-weight: 700; cursor: pointer; white-space: nowrap; }
 .ai-btn.ready { background: var(--brand); color: #fff; }
@@ -272,6 +295,37 @@ dialog.ai::backdrop { background: rgba(10,20,18,.55); }
 .setgrid .full { grid-column: 1 / -1; }
 .setgrid textarea { min-height: 90px; }
 
+/* today hero, company card */
+.hero { background: linear-gradient(135deg, #004f44, #0a6b5c); color: #fff; border: 0; }
+.hero h2 { margin: 0; font-size: 21px; }
+.hero .sub { margin: var(--s1) 0 0; opacity: .85; font-size: 14px; }
+.hstats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--s2); margin-top: var(--s4); }
+.hstat { background: rgba(255,255,255,.1); border-radius: var(--r-md); padding: var(--s3) 14px; }
+.hstat b { display: block; font-size: 26px; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.hstat span { font-size: 13px; opacity: .85; }
+.hero .btnrow { margin-top: var(--s4); }
+.hero .b1 { background: #fff; color: #004f44; }
+.hero .b2 { background: transparent; color: #fff; border-color: rgba(255,255,255,.45); }
+.hero .b2:hover { color: #fff; border-color: #fff; }
+.hero .b1:disabled, .hero .b2:disabled { opacity: .55; cursor: default; }
+.saved { margin-top: var(--s3); font-size: 13.5px; opacity: .9; }
+.nap { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s2); margin-top: var(--s3); }
+.napf { display: flex; gap: var(--s2); align-items: center; border: 1px solid var(--line); border-radius: var(--r-sm); padding: var(--s2) var(--s3); background: var(--bg); min-width: 0; }
+.napf.full { grid-column: 1 / -1; align-items: flex-start; }
+.napf div { flex: 1; min-width: 0; }
+.napf small { display: block; font-size: 12px; color: var(--muted); font-weight: 600; }
+.napf span { display: block; font-size: 14px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.napf.full span { white-space: normal; }
+.napf button { flex: none; border: 1px solid var(--line); background: var(--surface); border-radius: 8px; padding: 5px 10px; font-size: 13px; font-weight: 600; cursor: pointer; }
+.napf button:hover { border-color: var(--brand); color: var(--brand); }
+.sprintbar { display: flex; align-items: center; gap: var(--s2); font-size: 13px; font-weight: 700; color: var(--brand); }
+.sprintbar .track { flex: 1; height: 6px; border-radius: 99px; background: var(--brand-soft); overflow: hidden; min-width: 60px; }
+.sprintbar .track i { display: block; height: 100%; background: var(--brand); border-radius: 99px; }
+details.autobox > summary { cursor: pointer; list-style: none; display: flex; align-items: center; justify-content: space-between; gap: var(--s3); }
+details.autobox > summary::-webkit-details-marker { display: none; }
+details.autobox > summary::after { content: "▾"; color: var(--muted); }
+details.autobox[open] > summary::after { content: "▴"; }
+
 /* plan */
 .plan { list-style: none; margin: 14px 0 24px; padding: 0; display: grid; gap: 12px; counter-reset: p; }
 .pstep { counter-increment: p; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 4px 14px; }
@@ -317,6 +371,8 @@ dialog.ai::backdrop { background: rgba(10,20,18,.55); }
   .gloss { grid-template-columns: 1fr; }
   .acts { grid-column: 1 / -1; justify-content: flex-start; }
   .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .hstats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .nap { grid-template-columns: 1fr; }
   .setgrid { grid-template-columns: 1fr; }
   .qitem { grid-template-columns: 1fr; }
   .qitem .btnrow { justify-content: flex-start; }
@@ -386,6 +442,7 @@ dialog.ai::backdrop { background: rgba(10,20,18,.55); }
       <input id="q" class="search" type="search" autocomplete="off">
       <label for="sort" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)" data-t="sortLbl"></label>
       <select id="sort" class="sort">
+        <option value="smart" data-t="sSmart"></option>
         <option value="dr" data-t="sDR"></option>
         <option value="tr" data-t="sTR"></option>
         <option value="az" data-t="sAZ"></option>
@@ -422,7 +479,7 @@ const T = {
     sHot: "فرص قوية (DR 30+) تم التسجيل فيها لـ {s}", storeLbl: "المتجر:", undo: "تراجع", tOn: "تم التسجيل في {d} لمتجر {s}", tOff: "أُزيل التسجيل من {d} لمتجر {s}", tUndone: "تم التراجع", addStore: "+ متجر جديد", addPh: "مثال: shop.de", add: "إضافة", cancel: "إلغاء", badStore: "اكتبي اسم نطاق صحيح، مثل shop.de", dupStore: "هذا المتجر موجود.", sDr: "قوة الدومين (DR)", sYou: "karinex.de:",
     st1: "افتحي صفحة الموقع بزر «فتح».", st2: "سجّلي في الموقع أو أضيفي رابط {s}", st3: "اختاري المتجر في الأعلى، ثم اضغطي ✓ ويُحفظ تلقائياً.",
     search: "بحث", ph: "ابحثي عن موقع…", sortLbl: "الترتيب", sDR: "الأقوى أولاً", sTR: "الأكثر زيارات", sAZ: "أبجدياً",
-    fAll: "كل الفرص", fDf: "يمرّر قوة فقط", dl: "⬇ تحميل", dlDone: "تم تحميل الملف ({n} صف).", f2: "فرص قوية", f1: "فرص", f3: "karinex عنده رابط", fDone: "تم ✓", fOpen: "المتبقي", fSpam: "سبام",
+    fAll: "كل الفرص", sSmart: "الأولوية الذكية ⭐", fEasy: "⚡ سهلة: تسجيل فقط", fMulti: "تربط بعدة منافسين", nComps: "{n} منافسين", ty_dir: "📇 دليل/تقييمات", ty_coupon: "🏷️ كوبونات", ty_press: "📰 بيانات صحفية", ty_forum: "💬 منتدى/أسئلة", ty_article: "✍️ مقال/موقع", ty_platform: "🌐 منصة عامة", ty_shop: "🛒 متجر منافس", fDf: "يمرّر قوة فقط", dl: "⬇ تحميل", dlDone: "تم تحميل الملف ({n} صف).", f2: "فرص قوية", f1: "فرص", f3: "karinex عنده رابط", fDone: "تم ✓", fOpen: "المتبقي", fSpam: "سبام",
     o2: "فرصة قوية", o1: "فرصة", o3: "karinex عنده رابط",
     df: "يمرّر قوة", nf: "لا يمرّر قوة", visits: "زيارة/شهر", open: "فتح ↗",
     mark: "علّمي {d} كتم التسجيل لمتجر {s}", doneOn: "✓ {s} · {date}",
@@ -448,7 +505,7 @@ const T = {
     p7h: "المنتديات والأسئلة", p7w: "مستمر", p7: "أجيبي على أسئلة «أين أشتري مفتاح Windows/Office؟» إجابة مفيدة، وضعي الرابط فقط حين يناسب. الرابط nofollow لكنه يجلب زبائن وثقة.",
     p8h: "القياس", p8w: "كل شهر", p8: "الهدف 5 إلى 10 روابط جيدة شهرياً، لا مئات الروابط الرخيصة. تجنّبي تماماً شراء «باقات باك لينك» رخيصة: هي سبب السبام الموجود الآن.",
     pHave: "karinex عنده رابط",
-    tAuto: "تلقائي ⚡", ai: "✨ Claude", aiReady: "✉ الرسالة جاهزة", aiSent: "✓ أُرسلت",
+    tAuto: "اليوم ⚡", todayH: "مهام اليوم", hReady: "رسائل جاهزة", hFollow: "تحتاج متابعة", hWait: "بانتظار الرابط", hVer: "روابط مؤكدة (30 يوماً)", sprintBtn: "▶ ابدئي الإرسال السريع ({n})", batchBtn: "✨ اكتب 10 رسائل جديدة الآن", batchBusy: "Claude يكتب الرسائل… (حتى دقيقتين)", batchDone: "كُتبت {n} رسائل جديدة.", batchNone: "لا توجد فرص جديدة مناسبة الآن.", savedTime: "⏱ وقت موفَّر حتى الآن (تقدير): نحو {h} ساعة · {n} رسالة كتبها Claude بدل 15 دقيقة لكل واحدة", autoH: "الفحص اليومي التلقائي", sprintOf: "الإرسال السريع: {i} من {n}", bSentNext: "✓ أرسلتها ← التالي", bSkipNext: "تخطّي ←", sprintDone: "انتهيتِ! أرسلتِ {n} رسائل.", cardH: "بطاقة الشركة للتسجيل في الأدلة", cardSub: "عند تسجيل المتجر في دليل أو موقع تقييمات: انسخي كل حقل بضغطة واحدة.", cpy: "نسخ", dlLogo: "⬇ الشعار (عرضي)", dlIcon: "⬇ الشعار (مربّع)", sEmail: "البريد", sPhone: "الهاتف", sAddr: "العنوان", sShort: "وصف قصير (حتى 160 حرفاً)", ai: "✨ Claude", aiReady: "✉ الرسالة جاهزة", aiSent: "✓ أُرسلت",
     aiLoading: "Claude يقرأ الصفحة، يبحث عن بريد التواصل في الصفحة والـ Impressum، ويكتب الرسالة… (20 إلى 60 ثانية)",
     aiOff: "Claude غير مفعّل بعد، فهذا نص بقالب ثابت. لتفعيل Claude أضيفي ANTHROPIC_API_KEY في Vercel (راجعي README).",
     aiErr: "تعذّرت كتابة الرسالة ({e}). حاولي مرة أخرى بعد قليل.", aiRefusal: "رفض Claude كتابة رسالة لهذه الصفحة.",
@@ -478,7 +535,7 @@ const T = {
     sHot: "starke Chancen (DR 30+) erledigt für {s}", storeLbl: "Shop:", undo: "Rückgängig", tOn: "{d} für {s} als eingetragen markiert", tOff: "Eintrag bei {d} für {s} entfernt", tUndone: "Rückgängig gemacht", addStore: "+ Neuer Shop", addPh: "z. B. shop.de", add: "Hinzufügen", cancel: "Abbrechen", badStore: "Bitte eine gültige Domain eingeben, z. B. shop.de", dupStore: "Diesen Shop gibt es schon.", sDr: "Domain Rating (DR)", sYou: "karinex.de:",
     st1: "Seite über „Öffnen“ aufrufen.", st2: "Dort registrieren oder Link zu {s} setzen", st3: "Oben den Shop wählen, dann ✓ anklicken. Wird automatisch gespeichert.",
     search: "Suche", ph: "Domain suchen…", sortLbl: "Sortierung", sDR: "Stärkste zuerst", sTR: "Meiste Besucher", sAZ: "A–Z",
-    fAll: "Alle Chancen", fDf: "Nur dofollow", dl: "⬇ Download", dlDone: "Datei heruntergeladen ({n} Zeilen).", f2: "Starke Chancen", f1: "Chancen", f3: "Verlinkt karinex schon", fDone: "Erledigt ✓", fOpen: "Offen", fSpam: "Spam",
+    fAll: "Alle Chancen", sSmart: "Smarte Priorität ⭐", fEasy: "⚡ Schnell: nur eintragen", fMulti: "Mehrere Wettbewerber", nComps: "{n} Wettbewerber", ty_dir: "📇 Verzeichnis/Bewertung", ty_coupon: "🏷️ Gutscheine", ty_press: "📰 Presseportal", ty_forum: "💬 Forum/Fragen", ty_article: "✍️ Artikel/Website", ty_platform: "🌐 Öffentliche Plattform", ty_shop: "🛒 Wettbewerber-Shop", fDf: "Nur dofollow", dl: "⬇ Download", dlDone: "Datei heruntergeladen ({n} Zeilen).", f2: "Starke Chancen", f1: "Chancen", f3: "Verlinkt karinex schon", fDone: "Erledigt ✓", fOpen: "Offen", fSpam: "Spam",
     o2: "Starke Chance", o1: "Chance", o3: "Verlinkt karinex schon",
     df: "dofollow", nf: "nofollow", visits: "Besuche/Monat", open: "Öffnen ↗",
     mark: "{d} als eingetragen für {s} markieren", doneOn: "✓ {s} · {date}",
@@ -504,7 +561,7 @@ const T = {
     p7h: "Foren & Fragen", p7w: "Laufend", p7: "Fragen wie „Wo Windows/Office-Key kaufen?“ hilfreich beantworten, Link nur wo passend. nofollow, bringt aber Kunden und Vertrauen.",
     p8h: "Messen", p8w: "Jeden Monat", p8: "Ziel: 5 bis 10 gute Links pro Monat statt Hunderter billiger. Keine billigen „Backlink-Pakete“ kaufen: genau daher kommt der Spam von heute.",
     pHave: "karinex schon gelistet",
-    tAuto: "Automatik ⚡", ai: "✨ Claude", aiReady: "✉ Nachricht fertig", aiSent: "✓ Gesendet",
+    tAuto: "Heute ⚡", todayH: "Aufgaben heute", hReady: "Nachrichten fertig", hFollow: "Nachfassen", hWait: "Link steht aus", hVer: "Bestätigte Links (30 Tage)", sprintBtn: "▶ Schnellversand starten ({n})", batchBtn: "✨ Jetzt 10 neue Nachrichten schreiben", batchBusy: "Claude schreibt … (bis zu 2 Minuten)", batchDone: "{n} neue Nachrichten geschrieben.", batchNone: "Gerade keine passenden neuen Chancen.", savedTime: "⏱ Bisher gesparte Zeit (Schätzung): etwa {h} Stunden · {n} Nachrichten von Claude statt je 15 Minuten", autoH: "Täglicher Automatik-Lauf", sprintOf: "Schnellversand: {i} von {n}", bSentNext: "✓ Gesendet → Nächste", bSkipNext: "Überspringen →", sprintDone: "Fertig! {n} Nachrichten gesendet.", cardH: "Firmen-Steckbrief für Verzeichnisse", cardSub: "Beim Eintragen in Verzeichnisse und Bewertungsportale: jedes Feld mit einem Klick kopieren.", cpy: "Kopieren", dlLogo: "⬇ Logo (breit)", dlIcon: "⬇ Logo (quadratisch)", sEmail: "E-Mail", sPhone: "Telefon", sAddr: "Anschrift", sShort: "Kurzbeschreibung (bis 160 Zeichen)", ai: "✨ Claude", aiReady: "✉ Nachricht fertig", aiSent: "✓ Gesendet",
     aiLoading: "Claude liest die Seite, sucht die Kontaktadresse auf der Seite und im Impressum und schreibt die Nachricht … (20 bis 60 Sekunden)",
     aiOff: "Claude ist noch nicht aktiv, das ist eine feste Vorlage. Zum Aktivieren ANTHROPIC_API_KEY in Vercel eintragen (siehe README).",
     aiErr: "Nachricht konnte nicht geschrieben werden ({e}). Bitte gleich noch einmal versuchen.", aiRefusal: "Claude hat für diese Seite keine Nachricht geschrieben.",
@@ -534,6 +591,23 @@ const G = DATA.good.map(g => ({ d: g[0], dr: g[1], tr: g[2], df: g[3], o: g[4], 
 const SP = DATA.spam.map(s => ({ d: s[0], dr: s[1], c: s[2] }));
 const BR = (DATA.broken || []).map(b => ({ d: b[0], dr: b[1], tr: b[2], df: b[3], from: b[4], to: b[5], c: b[6], k: b[7], key: "bl--" + b[0] }));
 const GM = new Map(G.map(x => [x.d, x]));
+/* smart classification: what kind of site, how many competitors it links, priority */
+const RX_DIR = /bewertung|erfahrung|reviewhero|revuscore|trustpilot|trustedshops|trustprofile|hastrust|provenexpert|shopvote|kundennote|shopauskunft|golocal|gelbeseiten|dasoertliche|firmen|branche|verzeichnis|listing|bizidex|place123|whatsyourhours|dealerbaba|techdirectory|marktplatz-mittelstand|misterwhat|crowdtrust|startmee|boogo|webinhalt|rss-|deutscheshoponline|handelsregister|scam-detector|siteprice|sitelike|telefonbuch|go-findyou|ecomscout|suchnadel|suchnase|cylex|11880|yelp|hotfrog|mappde|bedrijf/i;
+const RX_COUPON = /gutschein|coupon|rabatt|deal|spar|saving|pennycanny|preis-king|unideal|save-up|cashback/i;
+const RX_PRESS = /presse|pressemitteil|^pr-|firmenpresse|fair-news|newsfenster|wirtschaftsfenster|business-echo|mittelstand-nachrichten|openpr|prcenter/i;
+const RX_FORUM = /forum|thread|topic|viewtopic|showthread|community|discussion|\/board|gathering|\/frage\/|gutefrage|askubuntu|answers|stackexchange|sportlerfrage/i;
+const RX_PLATFORM = /^(firebaseapp\.com|web\.app|pages\.dev|amebaownd\.com|myanimelist\.net|wikiwand\.com|steemit\.com|teletype\.in|ucoz\.(net|ru|com)|wakelet\.com|hashnode\.dev|jouwpagina\.nl|notion\.site|gravatar\.com|disqus\.com|devpost\.com|blogspot\.com|wordpress\.com|tumblr\.com|medium\.com|github\.io|netlify\.app|vercel\.app|wixsite\.com|weebly\.com|livejournal\.com|jimdofree\.com|jimdo\.com|over-blog\.com|beispielquellsite\.de|storeleads\.app|hudsonrock\.com|flexoffers\.com|ladesk\.com|zendesk\.com|intensedebate\.com|diigo\.com|scoop\.it|pinterest\.\w+|facebook\.com|youtube\.com|x\.com|twitter\.com|linkedin\.com|reddit\.com|instagram\.com|wikipedia\.org|microsoft\.com|google\.\w+|amazon\.\w+|apple\.com)$/i;
+const RX_SHOP = /lizenzguru|it-nerd24|softwarewelt24|software-sale|softwareshark|officekey24|lizengo|keyportal|mmoga|kinguin|g2a\.|softwarekaufen|blitzhandel24|softwarebilliger|mysoftware\.de|softwareindustrie24|lizenzhub|best-software|softwareeule|software-express|technikmarkt-aschaffenburg/i;
+function classify(x) {
+  const u = (x.l.find(Boolean) || "").toLowerCase();
+  x.ty = RX_SHOP.test(x.d) ? "shop" : RX_PLATFORM.test(x.d) ? "platform" : RX_PRESS.test(x.d) ? "press" : RX_DIR.test(x.d) ? "dir" : RX_COUPON.test(x.d) || /gutschein|coupon/.test(u) ? "coupon" : RX_FORUM.test(x.d + " " + u) ? "forum" : "article";
+  x.nc = x.l.filter(Boolean).length;
+  const easy = x.ty === "dir" || x.ty === "coupon" || x.ty === "press";
+  x.sc = x.ty === "shop" || x.ty === "platform" ? -100 + x.dr / 100 : x.dr + (x.df ? 18 : 0) + Math.log10((x.tr || 0) + 1) * 3 + (x.nc - 1) * 12 + (easy ? 8 : 0) - (x.dr >= 90 && !easy ? 45 : 0);
+  return x;
+}
+G.forEach(classify);
+const isEasy = x => x.ty === "dir" || x.ty === "coupon" || x.ty === "press";
 const DISAVOW_N = 388;
 const PLAN = [
   { k: "p1", disavow: true },
@@ -546,14 +620,15 @@ const PLAN = [
   { k: "p8" }
 ];
 let tab = "opps";
-try { const tb = localStorage.getItem("karinex-tab"); if (["opps", "broken", "plan", "auto"].includes(tb)) tab = tb; } catch (e) {}
+let tabSaved = false;
+try { const tb = localStorage.getItem("karinex-tab"); if (["opps", "broken", "plan", "auto"].includes(tb)) { tab = tb; tabSaved = true; } } catch (e) {}
 let AUTO = { configured: false, features: null, drafts: {}, verified: {}, profiles: {}, lastrun: null, runs: [] };
 let olMode = "o365";
 try { const o = localStorage.getItem("karinex-outlook"); if (["o365", "live", "mailto"].includes(o)) olMode = o; } catch (e) {}
-let ai = null, runState = "";
+let ai = null, runState = "", batchState = "";
 const COLORS = ["#004f44", "#1d4ed8", "#8a3ab9", "#c2410c", "#0e7490", "#be185d"];
 const DEFAULT_STORES = ["karinex.de", "softwarekey.de"];
-let lang = "ar", filter = "all", sort = "dr", q = "", comp = -1;
+let lang = "ar", filter = "all", sort = "smart", q = "", comp = -1;
 try { const c = parseInt(localStorage.getItem("karinex-comp"), 10); if (c >= -1 && c < COMPS.length) comp = c; } catch (e) {}
 const inComp = x => comp < 0 || !!x.l[comp];
 const urlOf = x => (comp >= 0 && x.l[comp]) || x.l.find(Boolean) || "";
@@ -604,22 +679,22 @@ function renderComps() {
   const nAll = G.length, per = COMPS.map((c, i) => G.filter(x => x.l[i]).length);
   $("#comps").innerHTML = `<span class="lbl">${t("compLbl")}</span>` +
     `<button type="button" class="cbtn" data-comp="-1" aria-pressed="${comp === -1}">${t("allComps")} <span class="n">${NF.format(nAll)}</span></button>` +
-    COMPS.map((c, i) => `<button type="button" class="cbtn" data-comp="${i}" aria-pressed="${comp === i}"><bdi dir="ltr">${esc(c.n)}</bdi> <span class="n">${NF.format(per[i])}</span></button>`).join("");
+    COMPS.map((c, i) => `<button type="button" class="cbtn" data-comp="${i}" aria-pressed="${comp === i}">${fav(c.n, "sm")}<bdi dir="ltr">${esc(c.n)}</bdi> <span class="n">${NF.format(per[i])}</span></button>`).join("");
   $("#subline").textContent = t("subN", { n: NF.format(G.length), c: NF.format(COMPS.length), d: fmtDate(DATA.date || "2026-11-17") });
   const drs = COMPS.map(c => ({ n: c.n, dr: c.dr })).sort((a, b) => b.dr - a.dr).concat([{ n: "karinex.de", dr: 1.5, me: true }]);
   const maxDr = Math.max(...drs.map(x => x.dr), 1);
-  $("#drList").innerHTML = drs.map(x => `<div class="drb${x.me ? " me" : ""}"><bdi dir="ltr">${esc(x.n)}</bdi><span class="tr" aria-hidden="true"><i style="width:${(x.dr / maxDr * 100).toFixed(1)}%"></i></span><b>${NF.format(x.dr)}</b></div>`).join("");
+  $("#drList").innerHTML = drs.map(x => `<div class="drb${x.me ? " me" : ""}"><span class="nm">${fav(x.n, "sm")}<bdi dir="ltr">${esc(x.n)}</bdi></span><span class="tr" aria-hidden="true"><i style="width:${(x.dr / maxDr * 100).toFixed(1)}%"></i></span><b>${NF.format(x.dr)}</b></div>`).join("");
 }
 
 function counts() {
-  const c = { all: 0, 2: 0, 1: 0, 3: 0, done: 0, open: 0, df: 0 };
-  for (const x of G) { if (!inComp(x)) continue; c[x.o]++; if (!haveFor(x)) { c.all++; if (x.df) c.df++; if (isDone(x.d)) c.done++; else c.open++; } }
+  const c = { all: 0, 2: 0, 1: 0, 3: 0, done: 0, open: 0, df: 0, easy: 0, multi: 0 };
+  for (const x of G) { if (!inComp(x)) continue; c[x.o]++; if (!haveFor(x)) { c.all++; if (x.df) c.df++; if (isEasy(x)) c.easy++; if (x.nc >= 2) c.multi++; if (isDone(x.d)) c.done++; else c.open++; } }
   return c;
 }
 
 function renderChips() {
   const c = counts();
-  const defs = [["all", "fAll", c.all], ["2", "f2", c[2]], ["1", "f1", c[1]], ["done", "fDone", c.done], ["open", "fOpen", c.open], ["df", "fDf", c.df], ["3", "f3", c[3]], ["spam", "fSpam", SP.filter(s => comp < 0 || s.c.includes(comp)).length]];
+  const defs = [["all", "fAll", c.all], ["easy", "fEasy", c.easy], ["multi", "fMulti", c.multi], ["2", "f2", c[2]], ["1", "f1", c[1]], ["done", "fDone", c.done], ["open", "fOpen", c.open], ["df", "fDf", c.df], ["3", "f3", c[3]], ["spam", "fSpam", SP.filter(s => comp < 0 || s.c.includes(comp)).length]];
   $("#chips").innerHTML = defs.map(([k, lbl, n]) =>
     `<button type="button" class="chip${k === "spam" ? " spamchip" : ""}" data-f="${k}" aria-pressed="${filter === k}">${t(lbl)} <span class="n">${NF.format(n)}</span></button>`).join("");
 }
@@ -663,9 +738,18 @@ function renderSave() {
   else if (!nt.dataset.err) nt.classList.remove("show");
 }
 
+const FAV_COLORS = ["#0f766e", "#1d4ed8", "#7c3aed", "#c2410c", "#0e7490", "#be185d", "#4d7c0f", "#b45309"];
+function fav(d, cls) {
+  let h = 0; for (const ch of d) h = (h * 31 + ch.charCodeAt(0)) >>> 0;
+  const letter = (d.replace(/^www\./, "")[0] || "?").toUpperCase();
+  const src = location.protocol === "file:" ? "" : `/api/icon?d=${encodeURIComponent(d)}`;
+  return `<span class="fav${cls ? " " + cls : ""}" style="--fc:${FAV_COLORS[h % FAV_COLORS.length]}" aria-hidden="true">${esc(letter)}${src ? `<img src="${src}" alt="" loading="lazy" decoding="async" onerror="this.remove()">` : ""}</span>`;
+}
 function rowHTML(x, rank) {
   const url = urlOf(x);
-  const cps = COMPS.map((c, i) => x.l[i] ? `<span class="pill cp">${t("links")} ${esc(shortName(c.n))}</span>` : "").join("");
+  const names = COMPS.filter((c, i) => x.l[i]).map(c => shortName(c.n));
+  const cps = x.nc >= 3 ? `<span class="pill multi" title="${esc(names.join(", "))}">${t("links")} ${esc(t("nComps", { n: x.nc }))}</span>`
+    : names.map(n => `<span class="pill cp${x.nc === 2 ? " multi" : ""}">${t("links")} ${esc(n)}</span>`).join("");
   const on = isDone(x.d), have = haveFor(x);
   const dis = mode === "loading" || mode === "ro" || pending.has(x.d) ? " disabled" : "";
   const check = have ? `<span class="check" style="border-style:dashed;cursor:default" title="${esc(t("o3"))}" aria-hidden="true"></span>`
@@ -675,13 +759,15 @@ function rowHTML(x, rank) {
   return `<li class="row${on ? " is-done" : ""}">
     ${check}
     <div class="main">
-      <div class="dom"><span class="rk">#${rank}</span><bdi dir="ltr">${esc(x.d)}</bdi></div>
+      ${fav(x.d)}
+      <div class="dom"><bdi dir="ltr">${esc(x.d)}</bdi><span class="rk">#${rank}</span></div>
       <a class="path" href="${esc(url)}" target="_blank" rel="noopener">${esc(shortPath(url))}</a>
       ${badges ? `<div class="marks">${badges}</div>` : ""}
     <div class="meta">
       <span class="pill dr${x.dr >= 60 ? " hi" : ""}">DR ${NF.format(Math.round(x.dr))}</span>
       <span class="pill traf">${x.tr ? NF.format(x.tr) : "–"} ${t("visits")}</span>
       <span class="pill ${x.df ? "df" : "nf"}">${t(x.df ? "df" : "nf")}</span>
+      <span class="pill ty${isEasy(x) ? " easy" : ""}">${t("ty_" + x.ty)}</span>
       ${x.o === 3 ? `<span class="pill o3">${t("o3")}</span>` : `<span class="pill o${x.o}">${t("o" + x.o)}</span>`}
       ${isVerified(x.d) ? `<span class="pill ver">${t("verB")}</span>` : ""}${x.n ? `<span class="pill new">${t("newB")}</span>` : ""}
       ${cps}
@@ -695,7 +781,7 @@ function renderTabs() {
   const openOpps = counts().open;
   const openBr = BR.filter(b => (comp < 0 || b.c === comp) && !isDone(b.key)).length;
   const readyN = Object.entries(AUTO.drafts).filter(([k, d]) => k.startsWith(cur + "|") && (isReadyDraft(d) || (d.followup && !d.followup.sentAt && !isVerified(d.domain)))).length;
-  const defs = [["opps", "tOpps", openOpps], ["broken", "tBroken", openBr], ["auto", "tAuto", readyN], ["plan", "tPlan", null]];
+  const defs = [["auto", "tAuto", readyN], ["opps", "tOpps", openOpps], ["broken", "tBroken", openBr], ["plan", "tPlan", null]];
   $("#tabs").innerHTML = defs.map(([k, l, n]) => `<button type="button" class="tab" role="tab" data-tab="${k}" aria-selected="${tab === k}">${t(l)}${n === null ? "" : ` <span class="n">${NF.format(n)}</span>`}</button>`).join("");
   $("#controls").dataset.tab = tab;
 }
@@ -725,7 +811,8 @@ function brokenHTML(b, rank) {
   return `<li class="row${on ? " is-done" : ""}">
     <button type="button" class="check" role="checkbox" aria-checked="${on}" data-d="${esc(b.key)}" aria-label="${esc(t("mark", { d: b.d, s: cur }))}" style="${on ? `background:${color(cur)};border-color:${color(cur)}` : ""}"${dis}>${CHECK}</button>
     <div class="main">
-      <div class="dom"><span class="rk">#${rank}</span><bdi dir="ltr">${esc(b.d)}</bdi></div>
+      ${fav(b.d)}
+      <div class="dom"><bdi dir="ltr">${esc(b.d)}</bdi><span class="rk">#${rank}</span></div>
       <a class="path" href="${esc(b.from)}" target="_blank" rel="noopener">${esc(shortPath(b.from))}</a>
       <span class="dead" title="${esc(b.to)}">${esc(t("deadTo"))} ${esc(shortPath(b.to))}</span>
       ${badges ? `<div class="marks">${badges}</div>` : ""}
@@ -756,9 +843,11 @@ function oppRows(qq) {
     if (filter === "done") return !haveFor(x) && isDone(x.d);
     if (filter === "open") return !haveFor(x) && !isDone(x.d);
     if (filter === "df") return !haveFor(x) && !!x.df;
+    if (filter === "easy") return !haveFor(x) && isEasy(x);
+    if (filter === "multi") return !haveFor(x) && x.nc >= 2;
     return String(x.o) === filter;
   });
-  return rows.sort(sort === "tr" ? (a, b) => b.tr - a.tr : sort === "az" ? (a, b) => a.d.localeCompare(b.d) : (a, b) => b.dr - a.dr || b.tr - a.tr);
+  return rows.sort(sort === "smart" ? (a, b) => b.sc - a.sc : sort === "tr" ? (a, b) => b.tr - a.tr : sort === "az" ? (a, b) => a.d.localeCompare(b.d) : (a, b) => b.dr - a.dr || b.tr - a.tr);
 }
 function downloadCsv() {
   const qq = q.trim().toLowerCase();
@@ -800,7 +889,7 @@ function renderPlan(v) {
       body = `<div class="plinks">${xs.map(x => {
         const cls = haveFor(x) ? " have" : isDone(x.d) ? " ok" : "";
         const tip = haveFor(x) ? t("pHave") : isDone(x.d) ? "✓" : "";
-        return `<a class="pl${cls}" href="${esc(urlOf(x))}" target="_blank" rel="noopener"${tip ? ` title="${esc(tip)}"` : ""}>${cls ? "✓ " : ""}<bdi dir="ltr">${esc(x.d)}</bdi> <b>DR ${NF.format(Math.round(x.dr))}</b></a>`;
+        return `<a class="pl${cls}" href="${esc(urlOf(x))}" target="_blank" rel="noopener"${tip ? ` title="${esc(tip)}"` : ""}>${cls ? "✓ " : fav(x.d, "sm")}<bdi dir="ltr">${esc(x.d)}</bdi> <b>DR ${NF.format(Math.round(x.dr))}</b></a>`;
       }).join("")}</div>`;
     }
     if (st.disavow) body = `<div class="plinks"><a class="pbtn" href="/disavow-karinex.txt" download>${t("p1b")}</a><a class="pl" href="https://search.google.com/search-console/disavow-links" target="_blank" rel="noopener">${t("p1c")}</a></div>`;
@@ -1051,8 +1140,8 @@ async function postJSON(path, body) {
 }
 
 /* modal */
-function openAI(key, view) {
-  ai = { key, view: view || "first", loading: false, error: "", draft: null, tpl: false, dirty: false };
+function openAI(key, view, sprint) {
+  ai = { key, view: view || "first", loading: false, error: "", draft: null, tpl: false, dirty: false, sprint: sprint || null, opened: false };
   const dlg = $("#ai");
   if (!dlg.open) dlg.showModal();
   const d = draftOf(key);
@@ -1110,7 +1199,9 @@ function closeAI() { const dlg = $("#ai"); if (dlg.open) dlg.close(); }
 function renderAI() {
   const dlg = $("#ai"); if (!ai) return;
   const info = itemInfo(ai.key), d = ai.draft;
-  const head = `<div class="ai-head"><h2 id="aiTitle"><bdi dir="ltr">${esc(info.name)}</bdi> <span class="pill dr">DR ${NF.format(Math.round(info.dr))}</span></h2><button type="button" class="xbtn" data-aiact="close" aria-label="${esc(t("bClose"))}">×</button></div>`;
+  const sp = ai.sprint;
+  const spBar = sp ? `<div class="sprintbar"><span>${esc(t("sprintOf", { i: NF.format(sp.i + 1), n: NF.format(sp.list.length) }))}</span><span class="track"><i style="width:${((sp.i) / sp.list.length * 100).toFixed(1)}%"></i></span></div>` : "";
+  const head = `<div class="ai-head" style="flex-wrap:wrap">${spBar ? `<div style="flex-basis:100%">${spBar}</div>` : ""}<h2 id="aiTitle" style="align-items:center">${fav(info.name, "md")}<bdi dir="ltr">${esc(info.name)}</bdi> <span class="pill dr">DR ${NF.format(Math.round(info.dr))}</span></h2><button type="button" class="xbtn" data-aiact="close" aria-label="${esc(t("bClose"))}">×</button></div>`;
   let body = "";
   if (ai.loading) body = `<div class="loadrow" role="status"><span class="spin"></span><span>${esc(t("aiLoading"))}</span></div>`;
   else if (!d) body = `<div class="ai-err" role="alert">${esc(ai.error)}</div><div class="btnrow"><button type="button" class="b1" data-aiact="regen">${t("bRegen")}</button><a class="b2" href="${esc(info.url)}" target="_blank" rel="noopener">${t("bPage")}</a></div>`;
@@ -1140,10 +1231,11 @@ function renderAI() {
       <div class="btnrow">
         <a class="b2" href="${esc(d.url || info.url)}" target="_blank" rel="noopener">${t("bPage")}</a>
         ${d.contactUrl ? `<a class="b2" href="${esc(d.contactUrl)}" target="_blank" rel="noopener">${t("bContact")}</a>` : ""}
-        <button type="button" class="b2${sent ? " ok" : ""}" data-aiact="sent"${sent ? " disabled" : ""}>${t("bSent")}</button>
+        ${sp ? `<button type="button" class="${ai.opened || !mailish ? "b1" : "b2"}" data-aiact="sent"${sent ? " disabled" : ""}>${t("bSentNext")}</button><button type="button" class="b2" data-aiact="next">${t("bSkipNext")}</button>`
+          : `<button type="button" class="b2${sent ? " ok" : ""}" data-aiact="sent"${sent ? " disabled" : ""}>${t("bSent")}</button>`}
         ${claudeOn && d.sentAt && !d.followup && !ai.tpl ? `<button type="button" class="b2" data-aiact="followup">${t("bFollow")}</button>` : ""}
         ${claudeOn && !fu ? `<button type="button" class="b2" data-aiact="regen">${t("bRegen")}</button>` : ""}
-        ${!ai.tpl && mode === "db" ? `<button type="button" class="b2" data-aiact="${d.skippedAt ? "unskip" : "skip"}">${t(d.skippedAt ? "bUnskip" : "bSkip")}</button>` : ""}
+        ${!ai.tpl && mode === "db" && !sp ? `<button type="button" class="b2" data-aiact="${d.skippedAt ? "unskip" : "skip"}">${t(d.skippedAt ? "bUnskip" : "bSkip")}</button>` : ""}
       </div>`;
   }
   dlg.innerHTML = head + `<div class="ai-body">${body}</div>`;
@@ -1157,11 +1249,45 @@ async function aiAct(act) {
   if (act === "followup") { aiFetch("new", "followup"); return; }
   const f = aiFields();
   // open/copy first, while the click still counts as a user gesture (pop-up blockers), then save in the background
-  if (act === "outlook") { openCompose(fu ? d.recipient_email : f.to, f.subject, f.message); aiSave(); return; }
+  if (act === "outlook") { openCompose(fu ? d.recipient_email : f.to, f.subject, f.message); aiSave(); if (ai.sprint && !ai.opened) { ai.opened = true; renderAI(); } return; }
+  if (act === "next") { await aiSave(); nextSprint(false); return; }
   if (act === "copy") { copyText(f.message); aiSave(); return; }
   if (act === "copyall") { copyText(`${t("fTo")}: ${fu ? d.recipient_email : f.to}\n${t("fSubj")}: ${f.subject}\n\n${f.message}`); aiSave(); return; }
-  if (act === "sent") { await aiSave(); markSent(ai.key, !!fu); return; }
+  if (act === "sent") { await aiSave(); const spr = ai.sprint; await markSent(ai.key, !!fu); if (spr && ai && ai.sprint === spr) nextSprint(true); return; }
   if (act === "skip" || act === "unskip") { const n = await draftAction(ai.key, act); if (n) { ai.draft = n; renderAI(); renderAll(); } return; }
+}
+
+/* quick-send sprint: one ready message after another */
+function sprintList() {
+  const mine = Object.entries(AUTO.drafts).filter(([k]) => k.startsWith(cur + "|")).map(([, d]) => d);
+  const dr = d => itemInfo(d.key).dr;
+  return mine.filter(isReadyDraft).sort((a, b) => dr(b) - dr(a)).map(d => ({ key: d.key, view: "first" }))
+    .concat(mine.filter(d => d.followup && !d.followup.sentAt && !isVerified(d.domain)).map(d => ({ key: d.key, view: "follow" })));
+}
+function startSprint() {
+  const list = sprintList(); if (!list.length) return;
+  const sp = { list, i: 0, sent: 0 };
+  openAI(list[0].key, list[0].view, sp);
+}
+function nextSprint(wasSent) {
+  const sp = ai && ai.sprint; if (!sp) return;
+  if (wasSent) sp.sent++;
+  sp.i++;
+  if (sp.i >= sp.list.length) { closeAI(); toast(esc(t("sprintDone", { n: NF.format(sp.sent) })), null); renderAll(); return; }
+  const it = sp.list[sp.i];
+  openAI(it.key, it.view, sp);
+}
+async function runBatch() {
+  if (batchState) return;
+  batchState = "busy"; renderList();
+  try {
+    const j = await postJSON("/api/batch", { store: cur, n: 10 });
+    if (j._status === 409) toast(esc(t("runBusy")), null);
+    else if (j.error === "claude-off") showErr(t("aiOff"));
+    else toast(esc(j.made && j.made.length ? t("batchDone", { n: NF.format(j.made.length) }) : t("batchNone")), null);
+  } catch (e) { if (e && e.code === "pin") askPin(); else showErr(t("aiErr", { e: (e && e.code) || "network" })); }
+  batchState = "";
+  await loadAuto();
 }
 
 /* automation tab */
@@ -1179,8 +1305,8 @@ function qItem(d, kind) {
   const act = d.action || "email_outreach";
   const mailish = isMailish(act);
   const sub = kind === "wait" ? esc(t("daysAgo", { n: NF.format(daysSince(d.sentAt)) })) + " · " : "";
-  return `<div class="qitem"><div style="min-width:0"><div class="t"><bdi dir="ltr">${esc(info.name)}</bdi><span class="pill dr">DR ${NF.format(Math.round(info.dr))}</span><span class="pill o3">${esc(t("ac_" + act))}</span>${d.key.startsWith("bl--") ? `<span class="pill kind-a">${esc(t("tBroken"))}</span>` : ""}</div>
-    <div class="s">${sub}${mailish ? (d.recipient_email ? `<bdi dir="ltr">${esc(d.recipient_email)}</bdi>` : esc(t("noTo"))) + " · " : ""}${esc(subj || (d.message || "").slice(0, 80))}</div></div>
+  return `<div class="qitem"><div style="min-width:0;display:flex;gap:12px;align-items:flex-start">${fav(info.name)}<div style="min-width:0"><div class="t"><bdi dir="ltr">${esc(info.name)}</bdi><span class="pill dr">DR ${NF.format(Math.round(info.dr))}</span><span class="pill o3">${esc(t("ac_" + act))}</span>${d.key.startsWith("bl--") ? `<span class="pill kind-a">${esc(t("tBroken"))}</span>` : ""}</div>
+    <div class="s">${sub}${mailish ? (d.recipient_email ? `<bdi dir="ltr">${esc(d.recipient_email)}</bdi>` : esc(t("noTo"))) + " · " : ""}${esc(subj || (d.message || "").slice(0, 80))}</div></div></div>
     <div class="btnrow">${kind !== "wait" && mailish && (d.recipient_email || !d.contactUrl || fu) ? `<button type="button" class="b1" data-q="ol${fu ? "f" : ""}" data-k="${esc(d.key)}">${t("bOutlook")}</button>` : ""}
     ${kind === "ready" && d.contactUrl && !d.recipient_email ? `<button type="button" class="b1" data-q="cf" data-k="${esc(d.key)}">${t("bCopy")} + ${t("bContact")}</button>` : ""}
     <button type="button" class="b2" data-ai="${esc(d.key)}"${fu ? ' data-view="follow"' : ""}>${t("bView")}</button>
@@ -1188,7 +1314,7 @@ function qItem(d, kind) {
     ${kind === "ready" ? `<button type="button" class="b2" data-q="skip" data-k="${esc(d.key)}">${t("bSkip")}</button>` : ""}</div></div>`;
 }
 function renderAuto(v) {
-  const intro = `<div class="card"><h2 style="margin:0 0 4px;font-size:20px">${esc(t("aH"))}</h2><p style="margin:0;color:var(--muted);font-size:14.5px">${esc(t("aSub"))}</p>`;
+  const intro = `<div class="card"><h2 style="margin:0 0 4px;font-size:20px">${esc(t("autoH"))}</h2><p style="margin:0;color:var(--muted);font-size:14.5px">${esc(t("aSub"))}</p>`;
   if (mode !== "db" || !AUTO.configured) { v.innerHTML = `<div class="auto">${intro}<div class="ai-warn" style="margin-top:12px">${esc(t("noAuto"))}</div><p class="legal" style="margin-top:12px">${esc(t("legal"))}</p></div></div>`; return; }
   const F = AUTO.features || {};
   const feat = [["claude", "fClaude"], ["ahrefs", "fAhrefs"], ["cron", "fCron"], ["pin", "fPin"]].map(([k, l]) => `<span class="${F[k] ? "y" : "n"}">${F[k] ? "✓" : "✗"} ${esc(t(l))}</span>`).join("");
@@ -1205,24 +1331,53 @@ function renderAuto(v) {
   const fresh = G.filter(x => x.n).sort((a, b) => String(b.n).localeCompare(String(a.n)) || b.dr - a.dr).slice(0, 20);
   const sec = (h, n, html) => `<h3 class="qh">${esc(t(h))} <span class="n">${NF.format(n)}</span></h3>${n ? html : `<p class="empty" style="padding:8px 0">${esc(t("qEmpty"))}</p>`}`;
   const p = profileOf(cur);
-  v.innerHTML = `<div class="auto">${intro}
+  const drafted = mine.filter(d => d.page_type).length;
+  const hours = Math.round(drafted * 15 / 60 * 10) / 10;
+  const claudeOn = !!F.claude;
+  const nap = [["sCompany", p.company], ["sUrl", p.shopUrl], ["sEmail", p.email], ["sPhone", p.phone], ["sAddr", p.address, true], ["sShort", p.shortDesc, true], ["sDesc", p.description, true]]
+    .filter(([, val]) => val).map(([l, val, full]) => `<div class="napf${full ? " full" : ""}"><div><small>${esc(t(l))}</small><span>${esc(val)}</span></div><button type="button" data-copy="${esc(val)}">${esc(t("cpy"))}</button></div>`).join("");
+  const hero = `<div class="card hero">
+      <h2>${esc(t("todayH"))}</h2><p class="sub">${esc(new Date().toLocaleDateString(lang === "ar" ? "ar-EG" : "de-DE", { weekday: "long", day: "numeric", month: "long" }))} · <bdi dir="ltr">${esc(cur)}</bdi></p>
+      <div class="hstats">
+        <div class="hstat"><b>${NF.format(ready.length)}</b><span>${esc(t("hReady"))}</span></div>
+        <div class="hstat"><b>${NF.format(follow.length)}</b><span>${esc(t("hFollow"))}</span></div>
+        <div class="hstat"><b>${NF.format(wait.length)}</b><span>${esc(t("hWait"))}</span></div>
+        <div class="hstat"><b>${NF.format(verRecent.length)}</b><span>${esc(t("hVer"))}</span></div>
+      </div>
+      <div class="btnrow">
+        <button type="button" class="b1" id="sprintGo"${ready.length + follow.length ? "" : " disabled"}>${esc(t("sprintBtn", { n: NF.format(ready.length + follow.length) }))}</button>
+        ${claudeOn ? `<button type="button" class="b2" id="batchGo"${batchState ? " disabled" : ""}>${batchState ? `<span class="spin" style="display:inline-block;width:14px;height:14px;border-width:2px;vertical-align:-2px;border-color:rgba(255,255,255,.3);border-top-color:#fff"></span> ${esc(t("batchBusy"))}` : esc(t("batchBtn"))}</button>` : ""}
+      </div>
+      ${drafted ? `<p class="saved">${esc(t("savedTime", { h: NF.format(hours), n: NF.format(drafted) }))}</p>` : ""}
+    </div>`;
+  v.innerHTML = `<div class="auto">${hero}
+    <details class="card autobox"${lr && lr.errors.length ? " open" : ""}><summary><span><b>${esc(t("autoH"))}</b> <span style="color:var(--muted);font-size:13.5px">· ${lr ? esc(t("lastRun", { d: when })) : esc(t("never"))}</span></span></summary>
+      <p style="margin:8px 0 0;color:var(--muted);font-size:14px">${esc(t("aSub"))}</p>
       <div class="feat">${feat}</div>
       <div class="kpis">${kp.map(([n, l]) => `<div class="kpi"><b>${NF.format(n)}</b><span>${esc(t(l))}</span></div>`).join("")}</div>
       <div class="btnrow" style="margin-top:12px"><button type="button" class="b1" id="runNow"${runState ? " disabled" : ""}>${runState ? `<span class="spin" style="display:inline-block;width:14px;height:14px;border-width:2px;vertical-align:-2px"></span> ${esc(t("running"))}` : esc(t("runNow"))}</button>
         <span style="color:var(--muted);font-size:13.5px">${lr ? esc(t("lastRun", { d: when })) : esc(t("never"))}</span></div>
       ${lr && lr.errors.length ? `<div class="ai-err" style="margin-top:10px"><bdi dir="ltr">${lr.errors.map(esc).join("<br>")}</bdi></div>` : ""}
-      <p class="legal" style="margin-top:12px">${esc(t("legal"))}</p></div>
+      <p class="legal" style="margin-top:12px">${esc(t("legal"))}</p></details>
     ${sec("qReady", ready.length, ready.map(d => qItem(d, "ready")).join(""))}
     ${sec("qFollow", follow.length, follow.map(d => qItem(d, "follow")).join(""))}
     ${sec("qWait", wait.length, wait.map(d => qItem(d, "wait")).join(""))}
     ${sec("qVer", verRecent.length, `<div class="plinks">${verRecent.map(([d, v]) => `<span class="pl ok">✓ <bdi dir="ltr">${esc(d)}</bdi> <b>${fmtDate(v[cur])}</b></span>`).join("")}</div>`)}
     ${sec("qNew", fresh.length, `<ul class="list">${fresh.map((x, i) => rowHTML(x, i + 1)).join("")}</ul>`)}
+    <div class="card"><h3 class="qh" style="margin:0">${esc(t("cardH"))}</h3><p style="margin:4px 0 0;color:var(--muted);font-size:13.5px">${esc(t("cardSub"))}</p>
+      <div class="nap">${nap}</div>
+      ${cur === "karinex.de" ? `<div class="btnrow" style="margin-top:12px"><a class="b2" href="assets/karinex-logo-dark.png" download="karinex-logo.png">${esc(t("dlLogo"))}</a><a class="b2" href="assets/apple-touch-icon.png" download="karinex-logo-quadrat.png">${esc(t("dlIcon"))}</a></div>` : ""}
+    </div>
     <form class="card" id="profForm"><h3 class="qh" style="margin:0">${esc(t("setH", { s: cur }))}</h3><p style="margin:4px 0 0;color:var(--muted);font-size:13.5px">${esc(t("setSub"))}</p>
       <div class="setgrid">
         <div class="fld"><label for="pfCompany">${t("sCompany")}</label><input id="pfCompany" value="${esc(p.company)}"></div>
         <div class="fld"><label for="pfUrl">${t("sUrl")}</label><input id="pfUrl" value="${esc(p.shopUrl)}"></div>
         <div class="fld"><label for="pfSender">${t("sSender")}</label><input id="pfSender" value="${esc(p.sender)}"></div>
+        <div class="fld"><label for="pfEmail">${t("sEmail")}</label><input id="pfEmail" type="email" value="${esc(p.email || "")}"></div>
+        <div class="fld"><label for="pfPhone">${t("sPhone")}</label><input id="pfPhone" type="tel" value="${esc(p.phone || "")}"></div>
         <div class="fld">${olSelect().replace('id="olSel"', 'id="olSel2"').replace('for="olSel"', 'for="olSel2"')}</div>
+        <div class="fld full"><label for="pfAddr">${t("sAddr")}</label><input id="pfAddr" value="${esc(p.address || "")}"></div>
+        <div class="fld full"><label for="pfShort">${t("sShort")}</label><input id="pfShort" maxlength="200" value="${esc(p.shortDesc || "")}"></div>
         <div class="fld full"><label for="pfDesc">${t("sDesc")}</label><textarea id="pfDesc">${esc(p.description)}</textarea></div>
         <div class="fld full"><label for="pfSig">${t("sSig")}</label><textarea id="pfSig">${esc(p.signature)}</textarea></div>
       </div>
@@ -1241,7 +1396,7 @@ async function runNow() {
 }
 async function saveProfile() {
   const val = id => document.getElementById(id).value;
-  const profile = { store: cur, company: val("pfCompany"), shopUrl: val("pfUrl"), sender: val("pfSender"), description: val("pfDesc"), signature: val("pfSig") };
+  const profile = { store: cur, company: val("pfCompany"), shopUrl: val("pfUrl"), sender: val("pfSender"), description: val("pfDesc"), signature: val("pfSig"), email: val("pfEmail"), phone: val("pfPhone"), address: val("pfAddr"), shortDesc: val("pfShort") };
   try { const j = await postJSON("/api/auto", { profile }); if (j.profile) AUTO.profiles[cur] = j.profile; toast(esc(t("sSaved")), null); }
   catch (e) { if (e && e.code === "pin") askPin(); else showErr(t("errSave")); }
 }
@@ -1251,13 +1406,14 @@ async function loadAuto() {
     if (!r.ok) return;
     const j = await r.json();
     AUTO.configured = !!j.configured; AUTO.features = j.features || null;
+    if (j.configured && !tabSaved) tab = "auto";
     if (!j.configured) { renderAll(); return; }
     AUTO.drafts = j.drafts || {}; AUTO.verified = j.verified || {}; AUTO.profiles = j.profiles || {}; AUTO.lastrun = j.lastrun || null; AUTO.runs = j.runs || [];
     for (const row of j.extra || []) {
       if (!Array.isArray(row) || GM.has(row[0])) continue;
       const l = COMPS.map((c, i) => (row[5] && row[5][i]) || "");
       const x = { d: row[0], dr: row[1], tr: row[2] || 0, df: row[3], o: row[4], l, n: row[6] || "1" };
-      G.push(x); GM.set(x.d, x);
+      G.push(classify(x)); GM.set(x.d, x);
     }
     for (const row of j.extraBroken || []) {
       if (!Array.isArray(row) || BR.some(b => b.d === row[0])) continue;
@@ -1273,6 +1429,9 @@ document.addEventListener("click", async e => {
   const vw = e.target.closest("[data-aiview]"); if (vw && ai) { await aiSave(); ai.view = vw.dataset.aiview; renderAI(); return; }
   if (e.target.id === "ai") { aiAct("close"); return; }
   if (e.target.closest("#runNow")) { runNow(); return; }
+  if (e.target.closest("#sprintGo")) { startSprint(); return; }
+  if (e.target.closest("#batchGo")) { runBatch(); return; }
+  const cp = e.target.closest("[data-copy]"); if (cp) { copyText(cp.dataset.copy); return; }
   const qb = e.target.closest("[data-q]"); if (qb) {
     const key = qb.dataset.k, d = draftOf(key); if (!d) return;
     if (qb.dataset.q === "ol") openCompose(d.recipient_email || "", d.subject, d.message);

@@ -34,6 +34,7 @@ module.exports = async (req, res) => {
         const profile = {
           store: p.store, company: clip(p.company, 120), shopUrl: clip(p.shopUrl, 200),
           description: clip(p.description, 1200), sender: clip(p.sender, 120), signature: clip(p.signature, 600),
+          email: clip(p.email, 120), phone: clip(p.phone, 60), address: clip(p.address, 300), shortDesc: clip(p.shortDesc, 200),
         };
         await L.hsetJSON(L.K.profiles, p.store, profile);
         return res.status(200).json({ ok: true, profile });

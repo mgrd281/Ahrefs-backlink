@@ -8,6 +8,8 @@ Statische Seite (`index.html` + `data.json`) und Vercel-Funktionen in `api/`:
 | `api/draft.js` | **Claude** liest eine Seite, sucht die Kontaktadresse (Seite, Impressum, Kontaktseite) und schreibt die fertige Nachricht |
 | `api/auto.js` | Zustand der Automatik + Shop-Angaben für die Nachrichten |
 | `api/daily.js` | **Täglicher Lauf** (Vercel Cron, 05:17 UTC): Links prüfen, neue Chancen finden, Nachrichten vorschreiben, nachfassen |
+| `api/batch.js` | „Jetzt 10 neue Nachrichten schreiben“ – ohne bis morgen zu warten |
+| `api/icon.js` | Logos (Favicons) der Seiten, 30 Tage im Vercel-CDN zwischengespeichert |
 | `api/_lib.js` | gemeinsame Bausteine (Redis, Webseiten lesen, Claude, Ahrefs) |
 
 ## Einrichten auf Vercel
@@ -26,6 +28,19 @@ Statische Seite (`index.html` + `data.json`) und Vercel-Funktionen in `api/`:
 | `PRIMARY_STORE` | Shop für die täglichen Nachrichten (Standard `karinex.de`) | nein |
 
 4. **Redeploy.** Danach im Tab **„Automatik ⚡“** einmal **„Jetzt prüfen“** klicken und die Shop-Angaben (Absender, Beschreibung, Signatur) ausfüllen.
+
+## Zeit sparen: was die Seite für Sie erledigt
+| Früher (von Hand) | Jetzt |
+|---|---|
+| Seite lesen, Ansprechpartner im Impressum suchen, E-Mail schreiben: 15–20 Minuten | Claude erledigt das; Sie prüfen und senden: etwa 30 Sekunden |
+| Überlegen, welche Seite zuerst | **Smarte Priorität ⭐**: Stärke, dofollow, Besucher, wie viele Wettbewerber dort stehen, Aufwand. Plattformen ohne Ansprechpartner und Wettbewerber-Shops werden aussortiert |
+| Nachsehen, ob der Link inzwischen steht | Täglicher Ahrefs-Check hakt bestätigte Links automatisch ab |
+| Nachfassen nicht vergessen | Nach 7 Tagen schreibt Claude die Nachfass-Mail |
+| Firmendaten in jedes Verzeichnis tippen | **Firmen-Steckbrief**: jedes Feld mit einem Klick kopieren, Logo zum Herunterladen |
+
+- **Tab „Heute ⚡“** (Startseite): Aufgaben des Tages, gesparte Zeit, **„Schnellversand“** – eine fertige Nachricht nach der anderen: In Outlook öffnen → senden → „✓ Gesendet → Nächste“.
+- **Filter „⚡ Schnell: nur eintragen“**: Verzeichnisse, Bewertungsportale, Gutschein- und Presseportale – kein E-Mail-Kontakt nötig.
+- **Filter „Mehrere Wettbewerber“**: Seiten, die 2 oder mehr Wettbewerber verlinken – dort sind die Chancen am größten.
 
 ## So läuft es
 - **Jeden Morgen** prüft Ahrefs, welche Seiten karinex.de jetzt verlinken. Bestätigte Links bekommen „🔗 Bestätigt“ und werden automatisch abgehakt.

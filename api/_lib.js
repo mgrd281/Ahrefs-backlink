@@ -265,6 +265,10 @@ function profileText(p) {
     `Shop: ${p.company || ""} (${p.shopUrl || ""})`,
     `Beschreibung: ${p.description || ""}`,
     p.sender ? `Absender: ${p.sender}` : "",
+    p.email ? `E-Mail: ${p.email}` : "",
+    p.phone ? `Telefon: ${p.phone}` : "",
+    p.address ? `Anschrift: ${p.address}` : "",
+    p.shortDesc ? `Kurzbeschreibung: ${p.shortDesc}` : "",
     p.signature ? `Signatur:\n${p.signature}` : "",
   ].filter(Boolean).join("\n");
 }
@@ -348,10 +352,49 @@ async function ahrefs(path, params) {
   return r.json();
 }
 
+/* ---------- priority (same rules as the page) ---------- */
+const RX_DIR = /bewertung|erfahrung|reviewhero|revuscore|trustpilot|trustedshops|trustprofile|hastrust|provenexpert|shopvote|kundennote|shopauskunft|golocal|gelbeseiten|dasoertliche|firmen|branche|verzeichnis|listing|bizidex|place123|whatsyourhours|dealerbaba|techdirectory|marktplatz-mittelstand|misterwhat|crowdtrust|startmee|boogo|webinhalt|rss-|deutscheshoponline|handelsregister|scam-detector|siteprice|sitelike|telefonbuch|go-findyou|ecomscout|suchnadel|suchnase|cylex|11880|yelp|hotfrog|mappde|bedrijf/i;
+const RX_COUPON = /gutschein|coupon|rabatt|deal|spar|saving|pennycanny|preis-king|unideal|save-up|cashback/i;
+const RX_PRESS = /presse|pressemitteil|^pr-|firmenpresse|fair-news|newsfenster|wirtschaftsfenster|business-echo|mittelstand-nachrichten|openpr|prcenter/i;
+const RX_FORUM = /forum|thread|topic|viewtopic|showthread|community|discussion|\/board|gathering|\/frage\/|gutefrage|askubuntu|answers|stackexchange|sportlerfrage/i;
+const RX_PLATFORM = /^(firebaseapp\.com|web\.app|pages\.dev|amebaownd\.com|myanimelist\.net|wikiwand\.com|steemit\.com|teletype\.in|ucoz\.(net|ru|com)|wakelet\.com|hashnode\.dev|jouwpagina\.nl|notion\.site|gravatar\.com|disqus\.com|devpost\.com|blogspot\.com|wordpress\.com|tumblr\.com|medium\.com|github\.io|netlify\.app|vercel\.app|wixsite\.com|weebly\.com|livejournal\.com|jimdofree\.com|jimdo\.com|over-blog\.com|beispielquellsite\.de|storeleads\.app|hudsonrock\.com|flexoffers\.com|ladesk\.com|zendesk\.com|intensedebate\.com|diigo\.com|scoop\.it|pinterest\.\w+|facebook\.com|youtube\.com|x\.com|twitter\.com|linkedin\.com|reddit\.com|instagram\.com|wikipedia\.org|microsoft\.com|google\.\w+|amazon\.\w+|apple\.com)$/i;
+const RX_SHOP = /lizenzguru|it-nerd24|softwarewelt24|software-sale|softwareshark|officekey24|lizengo|keyportal|mmoga|kinguin|g2a\.|softwarekaufen|blitzhandel24|softwarebilliger|mysoftware\.de|softwareindustrie24|lizenzhub|best-software|softwareeule|software-express|technikmarkt-aschaffenburg/i;
+function siteType(o) {
+  const u = (o.l.find(Boolean) || "").toLowerCase();
+  if (RX_SHOP.test(o.d)) return "shop";
+  if (RX_PLATFORM.test(o.d)) return "platform";
+  return RX_PRESS.test(o.d) ? "press" : RX_DIR.test(o.d) ? "dir" : RX_COUPON.test(o.d) || /gutschein|coupon/.test(u) ? "coupon" : RX_FORUM.test(o.d + " " + u) ? "forum" : "article";
+}
+function score(o) {
+  const ty = siteType(o), easy = ty === "dir" || ty === "coupon" || ty === "press", nc = o.l.filter(Boolean).length;
+  if (ty === "shop" || ty === "platform") return -100;
+  return o.dr + (o.df ? 18 : 0) + Math.log10((o.tr || 0) + 1) * 3 + (nc - 1) * 12 + (easy ? 8 : 0) - (o.dr >= 90 && !easy ? 45 : 0);
+}
+
+// Next sites Claude should write to: broken links in articles first, then opportunities by priority.
+function pickCandidates({ opps, broken, marks, drafts, store, want, now = Date.now() }) {
+  const hasDraft = key => {
+    const dr = drafts[`${store}|${key}`];
+    if (!dr) return false;
+    if (dr.error) return now - Date.parse(dr.at) < 3 * 86400000 || (dr.fails || 0) >= 2;
+    return true;
+  };
+  const isDone = key => !!(marks[key] || {})[store];
+  const compsOf = l => l.map((u, i) => (u ? COMPS[i] : "")).filter(Boolean);
+  return [
+    ...broken.filter(b => b.k === "a" && !isDone("bl--" + b.d) && !hasDraft("bl--" + b.d))
+      .sort((a, b) => b.dr - a.dr)
+      .map(b => ({ key: "bl--" + b.d, d: b.d, kind: "broken", url: b.from, dead: b.to, dr: b.dr, df: b.df, comps: [COMPS[b.c]] })),
+    ...opps.filter(o => o.o !== 3 && o.dr >= 10 && !isDone(o.d) && !hasDraft(o.d) && !looksSpam(o.d))
+      .map(o => ({ o, s: score(o) })).filter(x => x.s >= 30).sort((a, b) => b.s - a.s).map(x => x.o)
+      .map(o => { const i = o.l.findIndex(Boolean); return { key: o.d, d: o.d, kind: "opp", url: o.l[i] || `https://${o.d}/`, dr: o.dr, df: o.df, comps: compsOf(o.l) }; }),
+  ].slice(0, want);
+}
+
 const looksSpam = d => /\.(shop|xyz|site|store|online|top|icu|buzz|click|link)$/i.test(d) || /(seo|backlink|rank|serp|traffic|linkbuild|guestpost)/i.test(d) || /^\d{5,}\./.test(d);
 
 module.exports = {
   DATA, COMPS, K, MODEL, DEFAULT_STORES, features, redis, pipeline, hgetallJSON, hgetJSON, hsetJSON,
   pinOk, body, isDomain, isKey, isStore, today, allItems, findItem, discover, extractEmails, pageText,
-  writeDraft, writeFollowup, getProfile, defaultProfile, ahrefs, looksSpam, rootOf,
+  writeDraft, writeFollowup, getProfile, defaultProfile, ahrefs, looksSpam, rootOf, siteType, score, pickCandidates,
 };
