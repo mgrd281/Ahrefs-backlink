@@ -2,5 +2,10 @@
   "name": "karinex-backlink-tracker",
   "private": true,
   "version": "1.0.0",
-  "engines": { "node": ">=18" }
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^1.10.0"
+  }
 }
