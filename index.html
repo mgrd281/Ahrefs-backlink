@@ -295,6 +295,27 @@ dialog.ai::backdrop { background: rgba(10,20,18,.55); }
 .setgrid .full { grid-column: 1 / -1; }
 .setgrid textarea { min-height: 90px; }
 
+/* link check + brief */
+.chk, .brief { border: 1px solid var(--line); border-radius: var(--r-md); padding: var(--s3) 14px; display: grid; gap: var(--s2); }
+.chk h4, .brief h4 { margin: 0; font-size: 14px; }
+.chk ul, .brief ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; font-size: 13.5px; }
+.chk li { display: flex; gap: var(--s2); align-items: flex-start; }
+.chk li::before { content: "✓"; flex: none; width: 18px; height: 18px; border-radius: 50%; display: grid; place-items: center; font-size: 11px; font-weight: 700; background: var(--done-soft); color: var(--done); margin-top: 1px; }
+.chk li.no::before { content: "✕"; background: var(--warn-soft); color: var(--warn); }
+.chk li.info::before { content: "i"; background: var(--bg); color: var(--muted); }
+.chk blockquote { margin: 0; padding: var(--s2) var(--s3); border-inline-start: 3px solid var(--brand); background: var(--bg); border-radius: 6px; font-size: 13px; color: var(--muted); direction: ltr; text-align: left; }
+.chk blockquote mark { background: #fde68a; color: inherit; border-radius: 3px; padding: 0 2px; }
+.brief dl { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 6px var(--s3); margin: 0; font-size: 13.5px; }
+.brief dt { color: var(--muted); font-weight: 600; }
+.brief dd { margin: 0; min-width: 0; overflow-wrap: anywhere; }
+.brief dd a { color: var(--brand); font-weight: 600; direction: ltr; unicode-bidi: isolate; }
+.brief ul li { padding-inline-start: 14px; position: relative; }
+.brief ul li::before { content: "•"; position: absolute; inset-inline-start: 0; color: var(--brand); font-weight: 700; }
+.payrow { display: flex; flex-wrap: wrap; gap: var(--s2); align-items: center; padding: var(--s2) var(--s3); background: var(--hot-soft); border-radius: var(--r-md); font-size: 13.5px; }
+.payrow select, .payrow input { border: 1px solid var(--line); border-radius: 8px; padding: 6px 8px; background: var(--surface); }
+.payrow input { width: 84px; direction: ltr; }
+.payrow small { flex-basis: 100%; color: var(--muted); }
+
 /* today hero, company card */
 .hero { background: linear-gradient(135deg, #004f44, #0a6b5c); color: #fff; border: 0; }
 .hero h2 { margin: 0; font-size: 21px; }
@@ -505,7 +526,7 @@ const T = {
     p7h: "المنتديات والأسئلة", p7w: "مستمر", p7: "أجيبي على أسئلة «أين أشتري مفتاح Windows/Office؟» إجابة مفيدة، وضعي الرابط فقط حين يناسب. الرابط nofollow لكنه يجلب زبائن وثقة.",
     p8h: "القياس", p8w: "كل شهر", p8: "الهدف 5 إلى 10 روابط جيدة شهرياً، لا مئات الروابط الرخيصة. تجنّبي تماماً شراء «باقات باك لينك» رخيصة: هي سبب السبام الموجود الآن.",
     pHave: "karinex عنده رابط",
-    tAuto: "اليوم ⚡", todayH: "مهام اليوم", hReady: "رسائل جاهزة", hFollow: "تحتاج متابعة", hWait: "بانتظار الرابط", hVer: "روابط مؤكدة (30 يوماً)", sprintBtn: "▶ ابدئي الإرسال السريع ({n})", batchBtn: "✨ اكتب 10 رسائل جديدة الآن", batchBusy: "Claude يكتب الرسائل… (حتى دقيقتين)", batchDone: "كُتبت {n} رسائل جديدة.", batchNone: "لا توجد فرص جديدة مناسبة الآن.", savedTime: "⏱ وقت موفَّر حتى الآن (تقدير): نحو {h} ساعة · {n} رسالة كتبها Claude بدل 15 دقيقة لكل واحدة", autoH: "الفحص اليومي التلقائي", sprintOf: "الإرسال السريع: {i} من {n}", bSentNext: "✓ أرسلتها ← التالي", bSkipNext: "تخطّي ←", sprintDone: "انتهيتِ! أرسلتِ {n} رسائل.", cardH: "بطاقة الشركة للتسجيل في الأدلة", cardSub: "عند تسجيل المتجر في دليل أو موقع تقييمات: انسخي كل حقل بضغطة واحدة.", cpy: "نسخ", dlLogo: "⬇ الشعار (عرضي)", dlIcon: "⬇ الشعار (مربّع)", sEmail: "البريد", sPhone: "الهاتف", sAddr: "العنوان", sShort: "وصف قصير (حتى 160 حرفاً)", ai: "✨ Claude", aiReady: "✉ الرسالة جاهزة", aiSent: "✓ أُرسلت",
+    tAuto: "اليوم ⚡", chkH: "فحص الرابط", ckReach: "الصفحة تعمل (الحالة {s})", ckReachNo: "الصفحة لا تفتح أو تحجب الفحص (الحالة {s})", ckIndex: "مفهرسة في Google", ckNoindex: "غير مفهرسة في Google (noindex)", ckComp: "رابط المنافس موجود: «{a}» ({rel})", ckCompNo: "رابط المنافس غير ظاهر في الصفحة (ربما حُذف أو يُحمَّل بالجافاسكربت)", ckDead: "الرابط الميت مؤكد (الحالة {s})", ckDeadNo: "الرابط الميت غير مؤكد (الحالة {s})، فالرسالة تذكره بحذر", ckHave: "karinex مذكور في الصفحة بالفعل", ckNotYet: "karinex غير مذكور في الصفحة بعد", ckTarget: "صفحتنا المقترحة تعمل (الحالة {s})", ckExt: "{n} مواقع خارجية مرتبطة في الصفحة", ckPaid: "الموقع ينشر مقالات مدفوعة أو إعلانات", ckDate: "تاريخ النشر أو التحديث: {d}", briefH: "ماذا نطلب بالضبط", brPage: "صفحتهم", brTarget: "رابطنا المقترح", brAnchor: "نص الرابط", brPlace: "المكان", payLbl: "عرض دفع", payNone: "بدون دفع", payAsk: "سؤال عن السعر", payOffer: "عرض مبلغ حتى", payOfferV: "عرض حتى {b} €", payGen: "↻ اكتب بهذا الخيار", payNote: "المحتوى المدفوع يُعلَّم «إعلان» حسب القانون الألماني، وGoogle يطلب rel=\"sponsored\" للروابط المدفوعة. الرسالة لا تطلب dofollow.", sPay: "عرض الدفع الافتراضي", sBudget: "أقصى مبلغ (€)", todayH: "مهام اليوم", hReady: "رسائل جاهزة", hFollow: "تحتاج متابعة", hWait: "بانتظار الرابط", hVer: "روابط مؤكدة (30 يوماً)", sprintBtn: "▶ ابدئي الإرسال السريع ({n})", batchBtn: "✨ اكتب 10 رسائل جديدة الآن", batchBusy: "Claude يكتب الرسائل… (حتى دقيقتين)", batchDone: "كُتبت {n} رسائل جديدة.", batchNone: "لا توجد فرص جديدة مناسبة الآن.", savedTime: "⏱ وقت موفَّر حتى الآن (تقدير): نحو {h} ساعة · {n} رسالة كتبها Claude بدل 15 دقيقة لكل واحدة", autoH: "الفحص اليومي التلقائي", sprintOf: "الإرسال السريع: {i} من {n}", bSentNext: "✓ أرسلتها ← التالي", bSkipNext: "تخطّي ←", sprintDone: "انتهيتِ! أرسلتِ {n} رسائل.", cardH: "بطاقة الشركة للتسجيل في الأدلة", cardSub: "عند تسجيل المتجر في دليل أو موقع تقييمات: انسخي كل حقل بضغطة واحدة.", cpy: "نسخ", dlLogo: "⬇ الشعار (عرضي)", dlIcon: "⬇ الشعار (مربّع)", sEmail: "البريد", sPhone: "الهاتف", sAddr: "العنوان", sShort: "وصف قصير (حتى 160 حرفاً)", ai: "✨ Claude", aiReady: "✉ الرسالة جاهزة", aiSent: "✓ أُرسلت",
     aiLoading: "Claude يقرأ الصفحة، يبحث عن بريد التواصل في الصفحة والـ Impressum، ويكتب الرسالة… (20 إلى 60 ثانية)",
     aiOff: "Claude غير مفعّل بعد، فهذا نص بقالب ثابت. لتفعيل Claude أضيفي ANTHROPIC_API_KEY في Vercel (راجعي README).",
     aiErr: "تعذّرت كتابة الرسالة ({e}). حاولي مرة أخرى بعد قليل.", aiRefusal: "رفض Claude كتابة رسالة لهذه الصفحة.",
@@ -561,7 +582,7 @@ const T = {
     p7h: "Foren & Fragen", p7w: "Laufend", p7: "Fragen wie „Wo Windows/Office-Key kaufen?“ hilfreich beantworten, Link nur wo passend. nofollow, bringt aber Kunden und Vertrauen.",
     p8h: "Messen", p8w: "Jeden Monat", p8: "Ziel: 5 bis 10 gute Links pro Monat statt Hunderter billiger. Keine billigen „Backlink-Pakete“ kaufen: genau daher kommt der Spam von heute.",
     pHave: "karinex schon gelistet",
-    tAuto: "Heute ⚡", todayH: "Aufgaben heute", hReady: "Nachrichten fertig", hFollow: "Nachfassen", hWait: "Link steht aus", hVer: "Bestätigte Links (30 Tage)", sprintBtn: "▶ Schnellversand starten ({n})", batchBtn: "✨ Jetzt 10 neue Nachrichten schreiben", batchBusy: "Claude schreibt … (bis zu 2 Minuten)", batchDone: "{n} neue Nachrichten geschrieben.", batchNone: "Gerade keine passenden neuen Chancen.", savedTime: "⏱ Bisher gesparte Zeit (Schätzung): etwa {h} Stunden · {n} Nachrichten von Claude statt je 15 Minuten", autoH: "Täglicher Automatik-Lauf", sprintOf: "Schnellversand: {i} von {n}", bSentNext: "✓ Gesendet → Nächste", bSkipNext: "Überspringen →", sprintDone: "Fertig! {n} Nachrichten gesendet.", cardH: "Firmen-Steckbrief für Verzeichnisse", cardSub: "Beim Eintragen in Verzeichnisse und Bewertungsportale: jedes Feld mit einem Klick kopieren.", cpy: "Kopieren", dlLogo: "⬇ Logo (breit)", dlIcon: "⬇ Logo (quadratisch)", sEmail: "E-Mail", sPhone: "Telefon", sAddr: "Anschrift", sShort: "Kurzbeschreibung (bis 160 Zeichen)", ai: "✨ Claude", aiReady: "✉ Nachricht fertig", aiSent: "✓ Gesendet",
+    tAuto: "Heute ⚡", chkH: "Link-Check", ckReach: "Seite erreichbar (Status {s})", ckReachNo: "Seite nicht erreichbar oder blockiert die Prüfung (Status {s})", ckIndex: "Bei Google indexierbar", ckNoindex: "Nicht indexierbar (noindex)", ckComp: "Wettbewerber-Link gefunden: „{a}“ ({rel})", ckCompNo: "Wettbewerber-Link nicht auf der Seite gefunden (entfernt oder per JavaScript)", ckDead: "Toter Link bestätigt (Status {s})", ckDeadNo: "Toter Link nicht bestätigt (Status {s}) – die Nachricht formuliert vorsichtig", ckHave: "karinex ist auf der Seite schon verlinkt", ckNotYet: "karinex ist dort noch nicht verlinkt", ckTarget: "Unsere Zielseite funktioniert (Status {s})", ckExt: "{n} externe Domains auf der Seite", ckPaid: "Seite veröffentlicht bezahlte Beiträge oder Werbung", ckDate: "Veröffentlicht/aktualisiert: {d}", briefH: "Was wir genau vorschlagen", brPage: "Ihre Seite", brTarget: "Unser Link", brAnchor: "Linktext", brPlace: "Stelle", payLbl: "Bezahlung", payNone: "Ohne Bezahlung", payAsk: "Nach Preis fragen", payOffer: "Betrag anbieten bis", payOfferV: "Angebot bis {b} €", payGen: "↻ Damit neu schreiben", payNote: "Bezahlte Inhalte werden nach deutschem Recht als Anzeige gekennzeichnet; Google verlangt rel=\"sponsored\" für bezahlte Links. Die Nachricht fordert kein dofollow.", sPay: "Standard für Bezahlung", sBudget: "Höchstbetrag (€)", todayH: "Aufgaben heute", hReady: "Nachrichten fertig", hFollow: "Nachfassen", hWait: "Link steht aus", hVer: "Bestätigte Links (30 Tage)", sprintBtn: "▶ Schnellversand starten ({n})", batchBtn: "✨ Jetzt 10 neue Nachrichten schreiben", batchBusy: "Claude schreibt … (bis zu 2 Minuten)", batchDone: "{n} neue Nachrichten geschrieben.", batchNone: "Gerade keine passenden neuen Chancen.", savedTime: "⏱ Bisher gesparte Zeit (Schätzung): etwa {h} Stunden · {n} Nachrichten von Claude statt je 15 Minuten", autoH: "Täglicher Automatik-Lauf", sprintOf: "Schnellversand: {i} von {n}", bSentNext: "✓ Gesendet → Nächste", bSkipNext: "Überspringen →", sprintDone: "Fertig! {n} Nachrichten gesendet.", cardH: "Firmen-Steckbrief für Verzeichnisse", cardSub: "Beim Eintragen in Verzeichnisse und Bewertungsportale: jedes Feld mit einem Klick kopieren.", cpy: "Kopieren", dlLogo: "⬇ Logo (breit)", dlIcon: "⬇ Logo (quadratisch)", sEmail: "E-Mail", sPhone: "Telefon", sAddr: "Anschrift", sShort: "Kurzbeschreibung (bis 160 Zeichen)", ai: "✨ Claude", aiReady: "✉ Nachricht fertig", aiSent: "✓ Gesendet",
     aiLoading: "Claude liest die Seite, sucht die Kontaktadresse auf der Seite und im Impressum und schreibt die Nachricht … (20 bis 60 Sekunden)",
     aiOff: "Claude ist noch nicht aktiv, das ist eine feste Vorlage. Zum Aktivieren ANTHROPIC_API_KEY in Vercel eintragen (siehe README).",
     aiErr: "Nachricht konnte nicht geschrieben werden ({e}). Bitte gleich noch einmal versuchen.", aiRefusal: "Claude hat für diese Seite keine Nachricht geschrieben.",
@@ -1149,11 +1170,11 @@ function openAI(key, view, sprint) {
   if (mode === "db" && (!AUTO.features || AUTO.features.claude)) { aiFetch("new"); return; }
   ai.draft = tplDraft(key); ai.tpl = true; renderAI();
 }
-async function aiFetch(m, action) {
+async function aiFetch(m, action, pay) {
   ai.loading = true; ai.error = ""; renderAI();
   const key = ai.key;
   try {
-    const j = await postJSON("/api/draft", { key, store: cur, mode: m, action });
+    const j = await postJSON("/api/draft", { key, store: cur, mode: m, action, pay });
     if (!ai || ai.key !== key) return;
     if (j.configured === false || j.error === "claude-off") { if (!ai.draft) { ai.draft = tplDraft(key); ai.tpl = true; } }
     else if (j.draft) { AUTO.drafts[cur + "|" + key] = j.draft; ai.draft = j.draft; ai.tpl = false; if (action === "followup") ai.view = "follow"; }
@@ -1218,7 +1239,35 @@ function renderAI() {
         <div class="tags"><span class="pill o1">${esc(t("pt_" + d.page_type) || d.page_type)}</span><span class="pill o3">${esc(t("ac_" + act) || act)}</span>${d.fit ? `<span class="pill ${d.fit === "high" ? "df" : d.fit === "low" ? "nf" : "o2"}">${esc(t("fit_" + d.fit))}</span>` : ""}${d.auto ? `<span class="pill nf">⚡</span>` : ""}</div>
         ${d.summary_ar ? `<p dir="rtl">${esc(d.summary_ar)}</p>` : ""}${d.tips_ar ? `<p dir="rtl" style="color:var(--muted)">💡 ${esc(d.tips_ar)}</p>` : ""}${hint ? `<p><b>${esc(hint)}</b></p>` : ""}</div>` : "";
     const cands = (d.candidates || []).filter(c => c !== to);
-    body = `${ai.tpl ? `<div class="ai-warn">${esc(t("aiOff"))}</div>` : ""}${ai.error ? `<div class="ai-err" role="alert">${esc(ai.error)}</div>` : ""}${analysis}
+    const au = d.audit;
+    const li = (ok, txt) => `<li class="${ok === true ? "" : ok === false ? "no" : "info"}">${txt}</li>`;
+    const cl = au && au.compLinks && au.compLinks[0];
+    const deadOk = au && au.dead ? ([404, 410].includes(au.dead.status) || !!au.dead.toHome) : null;
+    const quote = (ctx, mark) => { const e = esc(ctx || ""); const m = esc(mark || ""); return m && e.includes(m) ? e.replace(m, `<mark>${m}</mark>`) : e; };
+    const check = au ? `<div class="chk"><h4>🔎 ${esc(t("chkH"))}</h4><ul>
+        ${li(!!au.reachable, esc(t(au.reachable ? "ckReach" : "ckReachNo", { s: au.status || "–" })))}
+        ${au.reachable ? li(!au.noindex, esc(t(au.noindex ? "ckNoindex" : "ckIndex"))) : ""}
+        ${au.reachable ? (cl ? li(true, esc(t("ckComp", { a: cl.text || "–", rel: cl.nofollow ? "nofollow" : "dofollow" }))) : li(false, esc(t("ckCompNo")))) : ""}
+        ${d.dead && au.dead ? li(deadOk, esc(t(deadOk ? "ckDead" : "ckDeadNo", { s: au.dead.status || "–" }))) : ""}
+        ${au.reachable ? li(!au.alreadyLinked, esc(t(au.alreadyLinked ? "ckHave" : "ckNotYet"))) : ""}
+        ${d.targetCheck ? li(d.targetCheck.status === 200, esc(t("ckTarget", { s: d.targetCheck.status || "–" }))) : ""}
+        ${au.reachable ? li(null, esc(t("ckExt", { n: NF.format(au.externalDomains || 0) }))) : ""}
+        ${au.sponsoredSignals || au.sellLink ? li(null, esc(t("ckPaid")) + (au.sellLink ? ` <a href="${esc(au.sellLink)}" target="_blank" rel="noopener">↗</a>` : "")) : ""}
+        ${au.published ? li(null, esc(t("ckDate", { d: fmtDate(au.published) }))) : ""}
+      </ul>${au.deadContext ? `<blockquote>…${quote(au.deadContext.context, au.deadContext.text)}…</blockquote>` : cl && cl.context ? `<blockquote>…${quote(cl.context, cl.text)}…</blockquote>` : ""}</div>` : "";
+    const brief = d.target_url || (d.key_points_ar && d.key_points_ar.length) ? `<div class="brief"><h4>🎯 ${esc(t("briefH"))}</h4><dl>
+        <dt>${esc(t("brPage"))}</dt><dd><a href="${esc(d.url || info.url)}" target="_blank" rel="noopener">${esc(shortPath(d.url || info.url))}</a></dd>
+        ${d.target_url ? `<dt>${esc(t("brTarget"))}</dt><dd><a href="${esc(d.target_url)}" target="_blank" rel="noopener">${esc(shortPath(d.target_url))}</a></dd>` : ""}
+        ${d.anchor_text ? `<dt>${esc(t("brAnchor"))}</dt><dd><bdi dir="auto">„${esc(d.anchor_text)}“</bdi></dd>` : ""}
+        ${d.placement ? `<dt>${esc(t("brPlace"))}</dt><dd><bdi dir="auto">${esc(d.placement)}</bdi></dd>` : ""}
+        ${d.pay && d.pay.mode !== "none" ? `<dt>${esc(t("payLbl"))}</dt><dd>${esc(d.pay.mode === "offer" ? t("payOfferV", { b: NF.format(d.pay.budget) }) : t("payAsk"))}</dd>` : ""}
+      </dl>${d.key_points_ar && d.key_points_ar.length ? `<ul dir="rtl">${d.key_points_ar.map(k => `<li>${esc(k)}</li>`).join("")}</ul>` : ""}</div>` : "";
+    const pm = (d.pay && d.pay.mode) || profileOf(cur).payMode || "none", pb = (d.pay && d.pay.budget) || profileOf(cur).payBudget || 50;
+    const payRow = claudeOn && !ai.tpl && !fu && d.action !== "skip" ? `<div class="payrow"><label for="paySel">💶 ${esc(t("payLbl"))}</label>
+        <select id="paySel"><option value="none"${pm === "none" ? " selected" : ""}>${esc(t("payNone"))}</option><option value="ask"${pm === "ask" ? " selected" : ""}>${esc(t("payAsk"))}</option><option value="offer"${pm === "offer" ? " selected" : ""}>${esc(t("payOffer"))}</option></select>
+        <label for="payBud" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">€</label><input id="payBud" type="number" min="10" max="5000" step="10" value="${esc(pb)}"> €
+        <button type="button" class="b2" data-aiact="paygen">${esc(t("payGen"))}</button><small>${esc(t("payNote"))}</small></div>` : "";
+    body = `${ai.tpl ? `<div class="ai-warn">${esc(t("aiOff"))}</div>` : ""}${ai.error ? `<div class="ai-err" role="alert">${esc(ai.error)}</div>` : ""}${analysis}${check}${brief}${payRow}
       ${d.followup ? `<div class="seg" role="group"><button type="button" data-aiview="first" aria-pressed="${!fu}">${t("vFirst")}</button><button type="button" data-aiview="follow" aria-pressed="${!!fu}">${t("vFollow")}</button></div>` : ""}
       ${mailish ? `<div class="fld"><label for="aiTo"><span>${t("fTo")}</span>${!to ? `<span style="color:var(--hot)">${esc(t("noMail"))}</span>` : ""}</label><input id="aiTo" type="email" list="aiCands" value="${esc(to)}" autocomplete="off"${fu ? " readonly" : ""}><datalist id="aiCands">${(d.candidates || []).map(c => `<option value="${esc(c)}">`).join("")}</datalist>${cands.length ? `<small style="color:var(--muted)">${esc(t("cands"))} <bdi dir="ltr">${esc(cands.join(", "))}</bdi></small>` : ""}</div>` : ""}
       ${subj || mailish ? `<div class="fld"><label for="aiSubj">${t("fSubj")}</label><input id="aiSubj" type="text" value="${esc(subj || "")}"></div>` : ""}
@@ -1246,6 +1295,7 @@ async function aiAct(act) {
   const d = ai.draft, fu = ai.view === "follow" && d && d.followup;
   if (act === "close") { await aiSave(); closeAI(); return; }
   if (act === "regen") { await aiSave(); aiFetch("regen"); return; }
+  if (act === "paygen") { const mode = $("#paySel").value, budget = Math.max(10, Math.min(5000, Math.round(Number($("#payBud").value) || 50))); await aiSave(); aiFetch("regen", undefined, { mode, budget }); return; }
   if (act === "followup") { aiFetch("new", "followup"); return; }
   const f = aiFields();
   // open/copy first, while the click still counts as a user gesture (pop-up blockers), then save in the background
@@ -1295,7 +1345,7 @@ function profileOf(s) {
   const def = s === "karinex.de"
     ? { company: "KARINEX", description: "Online-Shop für Original-Software von Microsoft (Windows, Office) mit digitaler Lieferung per E-Mail sowie USB-Produkte." }
     : { company: s, description: "Online-Shop für Original-Software-Lizenzen." };
-  return Object.assign({ store: s, shopUrl: `https://${s}/`, sender: "", signature: "" }, def, AUTO.profiles[s] || {});
+  return Object.assign({ store: s, shopUrl: `https://${s}/`, sender: "", signature: "", payMode: "none", payBudget: 50 }, def, AUTO.profiles[s] || {});
 }
 function daysSince(iso) { return Math.max(0, Math.floor((Date.now() - Date.parse(iso)) / 86400000)); }
 function qItem(d, kind) {
@@ -1377,6 +1427,8 @@ function renderAuto(v) {
         <div class="fld"><label for="pfPhone">${t("sPhone")}</label><input id="pfPhone" type="tel" value="${esc(p.phone || "")}"></div>
         <div class="fld">${olSelect().replace('id="olSel"', 'id="olSel2"').replace('for="olSel"', 'for="olSel2"')}</div>
         <div class="fld full"><label for="pfAddr">${t("sAddr")}</label><input id="pfAddr" value="${esc(p.address || "")}"></div>
+        <div class="fld"><label for="pfPay">${t("sPay")}</label><select id="pfPay"><option value="none"${p.payMode === "none" || !p.payMode ? " selected" : ""}>${esc(t("payNone"))}</option><option value="ask"${p.payMode === "ask" ? " selected" : ""}>${esc(t("payAsk"))}</option><option value="offer"${p.payMode === "offer" ? " selected" : ""}>${esc(t("payOffer"))}</option></select></div>
+        <div class="fld"><label for="pfBudget">${t("sBudget")}</label><input id="pfBudget" type="number" min="10" max="5000" step="10" value="${esc(p.payBudget || 50)}"></div>
         <div class="fld full"><label for="pfShort">${t("sShort")}</label><input id="pfShort" maxlength="200" value="${esc(p.shortDesc || "")}"></div>
         <div class="fld full"><label for="pfDesc">${t("sDesc")}</label><textarea id="pfDesc">${esc(p.description)}</textarea></div>
         <div class="fld full"><label for="pfSig">${t("sSig")}</label><textarea id="pfSig">${esc(p.signature)}</textarea></div>
@@ -1396,7 +1448,7 @@ async function runNow() {
 }
 async function saveProfile() {
   const val = id => document.getElementById(id).value;
-  const profile = { store: cur, company: val("pfCompany"), shopUrl: val("pfUrl"), sender: val("pfSender"), description: val("pfDesc"), signature: val("pfSig"), email: val("pfEmail"), phone: val("pfPhone"), address: val("pfAddr"), shortDesc: val("pfShort") };
+  const profile = { store: cur, company: val("pfCompany"), shopUrl: val("pfUrl"), sender: val("pfSender"), description: val("pfDesc"), signature: val("pfSig"), email: val("pfEmail"), phone: val("pfPhone"), address: val("pfAddr"), shortDesc: val("pfShort"), payMode: val("pfPay"), payBudget: Number(val("pfBudget")) || 50 };
   try { const j = await postJSON("/api/auto", { profile }); if (j.profile) AUTO.profiles[cur] = j.profile; toast(esc(t("sSaved")), null); }
   catch (e) { if (e && e.code === "pin") askPin(); else showErr(t("errSave")); }
 }

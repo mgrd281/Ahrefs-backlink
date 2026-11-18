@@ -1,5 +1,5 @@
 // Claude analysiert eine Seite und schreibt die fertige Nachricht.
-// POST { key, store, mode: "new" | "regen" }          -> Entwurf (aus dem Speicher, wenn schon vorhanden)
+// POST { key, store, mode: "new" | "regen", pay?: { mode: "none"|"ask"|"offer", budget } } -> Entwurf (aus dem Speicher, wenn schon vorhanden)
 // POST { key, store, action: "followup" }             -> Nachfass-E-Mail zu einer gesendeten Nachricht
 // POST { key, store, action: "save", to, subject, message } -> eigene Änderungen speichern
 // POST { key, store, action: "sent" | "unsent" | "skip" | "unskip" }
@@ -52,11 +52,12 @@ module.exports = async (req, res) => {
       return res.status(200).json({ draft: next });
     }
 
-    if (cur && cur.message !== undefined && cur.page_type && b.mode !== "regen") return res.status(200).json({ draft: cur, cached: true });
+    if (cur && cur.message !== undefined && cur.page_type && b.mode !== "regen" && !(b.pay && cur.pay && b.pay.mode !== cur.pay.mode)) return res.status(200).json({ draft: cur, cached: true });
     const item = await L.findItem(b.key);
     if (!item) return res.status(404).json({ error: "unknown key" });
     const profile = await L.getProfile(b.store);
-    const draft = await L.writeDraft(item, profile, b.store);
+    const pay = b.pay && ["none", "ask", "offer"].includes(b.pay.mode) ? { mode: b.pay.mode, budget: b.pay.budget } : null;
+    const draft = await L.writeDraft(item, profile, b.store, pay ? { pay } : {});
     if (cur && cur.sentAt) draft.sentAt = cur.sentAt;
     await L.hsetJSON(L.K.drafts, field, draft);
     return res.status(200).json({ draft });

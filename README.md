@@ -42,6 +42,15 @@ Statische Seite (`index.html` + `data.json`) und Vercel-Funktionen in `api/`:
 - **Filter „⚡ Schnell: nur eintragen“**: Verzeichnisse, Bewertungsportale, Gutschein- und Presseportale – kein E-Mail-Kontakt nötig.
 - **Filter „Mehrere Wettbewerber“**: Seiten, die 2 oder mehr Wettbewerber verlinken – dort sind die Chancen am größten.
 
+## Wie Claude jede Nachricht vorbereitet
+1. **Link-Check der Seite** (ohne Kosten): erreichbar? indexierbar (noindex)? Steht der Wettbewerber-Link wirklich dort – mit Linktext, rel-Attribut und dem Satz drumherum? Bei defekten Links: ist der tote Link noch auf der Seite, und liefert er wirklich 404? Ist karinex schon verlinkt? Verkauft die Seite Werbung/Gastbeiträge (Mediadaten)?
+   - Nicht erreichbar oder karinex schon verlinkt → kein Claude-Aufruf, kein Geld.
+   - Seite blockiert automatische Prüfungen (z. B. Cloudflare) → Hinweis „selbst öffnen“.
+2. **Passende Zielseite im Shop**: Der Shop-Sitemap (Produkte, Kategorien, Ratgeber; täglich aktualisiert) wird nach Produkt, Version und Thema der Stelle durchsucht; Claude wählt daraus genau eine Seite – nie eine erfundene URL. Die Zielseite wird auf Status 200 geprüft.
+3. **Klare Nachricht**: Bezug auf den Beitrag, genaue Stelle, Anlass, Vorschlag als Liste (Seite – Stelle – Link – Linktext), Nutzen für die Leser, Abschluss mit Signatur.
+4. **Bezahlung** (Standard in den Shop-Angaben, pro Nachricht änderbar): ohne / nach Preis fragen / Betrag bis X € anbieten. Bezahlte Inhalte werden als Anzeige gekennzeichnet (deutsches Recht), Google verlangt `rel="sponsored"` für bezahlte Links – die Nachricht fordert kein dofollow.
+5. Im Fenster sieht man alles: Link-Check (✓/✕), zitierte Stelle, „Was wir genau vorschlagen“ und die Punkte auf Arabisch.
+
 ## So läuft es
 - **Jeden Morgen** prüft Ahrefs, welche Seiten karinex.de jetzt verlinken. Bestätigte Links bekommen „🔗 Bestätigt“ und werden automatisch abgehakt.
 - Neue Links der Wettbewerber der letzten Tage werden als neue Chancen eingetragen („Neu“). Einmal pro Woche kommen defekte Links dazu.
